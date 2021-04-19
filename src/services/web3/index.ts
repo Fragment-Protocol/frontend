@@ -12,7 +12,7 @@ interface INetworks {
 }
 
 interface IMetamaskService {
-  testnet: 'ropsten' | 'kovan' | 'rinkeby';
+  testnetEth: 'ropsten' | 'kovan' | 'rinkeby';
   isProduction?: boolean;
 }
 
@@ -21,6 +21,8 @@ const networks: INetworks = {
   ropsten: '0x3',
   kovan: '0x2a',
   rinkeby: '0x4',
+  bnct: '0x61',
+  bnc: '0x38',
 };
 
 export default class MetamaskService {
@@ -28,7 +30,9 @@ export default class MetamaskService {
 
   public web3Provider;
 
-  private testnet: string;
+  private testnetEth: string;
+
+  private testnetBnc = 'bnct';
 
   private isProduction: boolean;
 
@@ -36,27 +40,38 @@ export default class MetamaskService {
 
   public chainChangedObs: any;
 
-  public usedNetwork: string;
+  public usedNetworkEth: string;
 
-  public usedChain: string;
+  public usedChainEth: string;
 
-  constructor({ testnet, isProduction = false }: IMetamaskService) {
+  public usedChainBnc: string;
+
+  public usedNetworkBnc: string;
+
+  constructor({ testnetEth, isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
     this.web3Provider = new Web3(this.wallet);
-    this.testnet = testnet;
+    this.testnetEth = testnetEth;
     this.isProduction = isProduction;
 
-    this.usedNetwork = this.isProduction ? 'mainnet' : this.testnet;
-    this.usedChain = this.isProduction ? networks.mainnet : networks[this.testnet];
+    this.usedNetworkEth = this.isProduction ? 'mainnet' : this.testnetEth;
+    this.usedChainEth = this.isProduction ? networks.mainnet : networks[this.testnetEth];
+
+    this.usedNetworkBnc = this.isProduction ? 'bnc' : this.testnetBnc;
+    this.usedChainBnc = this.isProduction ? networks.bnc : networks[this.testnetBnc];
 
     this.chainChangedObs = new Observable((subscriber) => {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
 
-        if (currentChain !== this.usedChain) {
-          subscriber.next(`Please choose ${this.usedNetwork} network in metamask wallet.`);
+        if (currentChain !== this.usedChainEth && currentChain !== this.usedChainBnc) {
+          subscriber.error(
+            `Please choose ${this.usedNetworkEth} or binance smart testnet chain network in metamask wallet.`,
+          );
         } else {
-          subscriber.next('');
+          subscriber.next(
+            currentChain === this.usedChainEth ? this.usedNetworkEth : this.usedNetworkBnc,
+          );
         }
       });
     });
@@ -78,33 +93,43 @@ export default class MetamaskService {
         this.wallet
           .request({ method: 'eth_chainId' })
           .then((resChain: any) => {
-            if (resChain === this.usedChain) {
+            if (resChain === this.usedChainEth || resChain === this.usedChainBnc) {
               this.ethRequestAccounts()
                 .then((account: any) => {
                   [this.walletAddress] = account;
                   resolve({
                     address: account[0],
-                    network: resChain,
+                    network:
+                      resChain === this.usedChainEth ? this.usedNetworkEth : this.usedNetworkBnc,
                   });
                 })
                 .catch(() => reject(new Error('Not authorized')));
             } else {
-              reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet`));
+              reject(
+                new Error(
+                  `Please choose ${this.usedNetworkEth} or binance smart testnet chain network in metamask wallet.`,
+                ),
+              );
             }
           })
           .catch(() => reject(new Error('Not authorized')));
-      } else if (currentChain === this.usedChain) {
+      } else if (currentChain === this.usedChainEth || currentChain === this.usedChainBnc) {
         this.ethRequestAccounts()
           .then((account: any) => {
             [this.walletAddress] = account;
             resolve({
               address: account[0],
-              network: currentChain,
+              network:
+                currentChain === this.usedChainEth ? this.usedNetworkEth : this.usedNetworkBnc,
             });
           })
           .catch(() => reject(new Error('Not authorized')));
       } else {
-        reject(new Error(`Please choose ${this.usedNetwork} network in metamask wallet.`));
+        reject(
+          new Error(
+            `Please choose ${this.usedNetworkEth} or binance smart testnet chain network in metamask wallet.`,
+          ),
+        );
       }
     });
   }

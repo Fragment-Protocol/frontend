@@ -37,4 +37,9 @@
   &-orange {
     color: $orange;
   }
+  &-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 105px;
+  }
 }

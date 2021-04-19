@@ -9,3 +9,4 @@ export { default as Input } from './Input';
 export { default as NFTAddressModal } from './NFTAddressModal';
 export { default as SecondStepModal } from './SecondStepModal';
 export { default as EndStepModal } from './EndStepModal';
+export { default as ErrorModal } from './ErrorModal';

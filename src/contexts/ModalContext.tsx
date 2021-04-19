@@ -6,6 +6,8 @@ const defaultValues = {
   token: false,
   end: false,
   connect: false,
+  disconnect: false,
+  errMsg: '',
 };
 
 const Context = createContext<any>({
@@ -19,6 +21,8 @@ interface IState {
   token: boolean;
   end: boolean;
   connect: boolean;
+  disconnect: boolean;
+  errMsg: string;
 }
 
 class ModalContext extends React.Component<any, IState> {
@@ -39,6 +43,16 @@ class ModalContext extends React.Component<any, IState> {
     });
   };
 
+  handleError = (value: string): void => {
+    this.setState<any>((state: IState) => {
+      return {
+        state,
+        errMsg: value,
+      };
+    });
+    console.log(this.state, 'state');
+  };
+
   render() {
     return (
       <Context.Provider
@@ -48,7 +62,10 @@ class ModalContext extends React.Component<any, IState> {
           token: this.state.token,
           end: this.state.end,
           connect: this.state.connect,
+          disconnect: this.state.disconnect,
+          errMsg: this.state.errMsg,
           handleChangeVisible: this.handleChangeVisible,
+          handleError: this.handleError,
         }}
       >
         {this.props.children}

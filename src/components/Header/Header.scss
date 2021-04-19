@@ -10,4 +10,9 @@
     justify-content: space-between;
     align-items: center;
   }
+  &__btn {
+    img {
+      margin-right: 10px;
+    }
+  }
 }

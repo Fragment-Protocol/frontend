@@ -6,10 +6,13 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import ModalContext from './contexts/ModalContext';
+import Connector from './contexts/Connector';
 
 ReactDOM.render(
-  <ModalContext>
-    <App />
-  </ModalContext>,
+  <Connector>
+    <ModalContext>
+      <App />
+    </ModalContext>
+  </Connector>,
   document.getElementById('root'),
 );

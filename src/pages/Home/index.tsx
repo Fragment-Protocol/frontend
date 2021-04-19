@@ -3,11 +3,14 @@ import React from 'react';
 import PreviewImg from '../../assets/img/preview.png';
 import { Button, NFTCard } from '../../components';
 import { useModalContext } from '../../contexts/ModalContext';
+import config from '../../config';
+import { useConnectorContext } from '../../contexts/Connector';
 
 import './Home.scss';
 
 const Home: React.FC = () => {
   const modalContext = useModalContext();
+  const connector = useConnectorContext();
   const cards = [
     {
       name: 'HASHMASKS',
@@ -25,7 +28,11 @@ const Home: React.FC = () => {
     },
   ];
   const handleOpenAddressModal = (): void => {
-    modalContext.handleChangeVisible('address', true);
+    if (connector.network === config.networkEth) {
+      modalContext.handleChangeVisible('address', true);
+    } else {
+      modalContext.handleError(`please choose ${config.networkEth} in metamask wallet`);
+    }
   };
 
   return (

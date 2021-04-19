@@ -1,0 +1,48 @@
+@import './reset';
+@import './fonts';
+@import './vars';
+@import './typography';
+@import '~antd/dist/antd.css';
+@import './components/index.scss';
+html,
+body {
+  margin: 0;
+
+  height: max-content;
+
+  font-family: Mono, sans-serif;
+  font-weight: 700;
+
+  color: #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+.fragment {
+  display: flex;
+  flex-direction: column;
+  background: black;
+  color: white;
+
+  height: 100%;
+
+  // font-size: 14px;
+  // line-height: 17px;
+}
+
+main {
+  flex-grow: 2;
+}
+.hidden {
+  display: none !important;
+}
+.row {
+  max-width: 1000px;
+  margin: 0 auto;
+}

@@ -1,0 +1,11 @@
+.ant-progress {
+  &-text {
+    display: none;
+  }
+  &-outer {
+    padding-right: 0 !important;
+  }
+  &-inner {
+    background: #494949;
+  }
+}

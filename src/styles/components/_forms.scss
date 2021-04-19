@@ -1,0 +1,17 @@
+.form {
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    &-input {
+      width: 480px;
+      &-short {
+        width: 180px;
+      }
+    }
+    &-btn {
+      align-self: center;
+      margin-top: 40px;
+    }
+  }
+}

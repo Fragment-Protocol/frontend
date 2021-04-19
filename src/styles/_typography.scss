@@ -1,0 +1,40 @@
+.h1 {
+  font-size: 45px;
+  line-height: 60px;
+}
+.text {
+  font-size: 20px;
+  line-height: 25px;
+  &-smm {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  &-sm {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  &-md {
+    font-size: 16px;
+    line-height: 21px;
+  }
+  &-lg {
+    font-size: 25px;
+    line-height: 32px;
+  }
+  &-xl {
+    font-size: 30px;
+    line-height: 39px;
+  }
+  &-white {
+    color: white;
+  }
+  &-upper {
+    text-transform: uppercase;
+  }
+  &-gray {
+    color: $gray-text;
+  }
+  &-orange {
+    color: $orange;
+  }
+}

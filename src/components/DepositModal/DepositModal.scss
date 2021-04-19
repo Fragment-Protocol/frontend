@@ -1,0 +1,16 @@
+.m-deposit {
+  padding: 60px 60px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__subtitle {
+    margin: 12px 0 40px;
+  }
+  &__input {
+    width: 480px !important;
+  }
+  &__btn {
+    margin-top: 40px;
+  }
+}

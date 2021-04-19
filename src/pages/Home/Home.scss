@@ -1,0 +1,47 @@
+@import '../../styles/vars';
+.home {
+  overflow: hidden;
+  padding-bottom: 50px;
+  &__preview {
+    position: relative;
+    &-row {
+      position: relative;
+      padding-top: 95px;
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        height: 425px;
+        width: 500px;
+        background: #000;
+        background: $orange;
+        right: calc(100% + 187px);
+        top: 0;
+        box-shadow: -8px 8px 0 white;
+      }
+    }
+    &-content {
+      max-width: 480px;
+    }
+    &-subtitle {
+      margin: 10px 0 50px;
+    }
+    &-img {
+      position: absolute;
+      top: 0;
+      left: 550px;
+      height: 425px;
+      img {
+        max-height: 100%;
+      }
+    }
+  }
+  &__content {
+    margin-top: 60px;
+    &-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 4px 4px;
+    }
+  }
+}

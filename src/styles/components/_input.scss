@@ -1,0 +1,58 @@
+input,
+.input {
+  padding: 26px 15px 22px;
+  width: 100%;
+  clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 7% 100%, -13% 0px);
+  text-align: center;
+  &__wrapper {
+    position: relative;
+    width: fit-content;
+  }
+  &__border {
+    background: $orange;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: -4px;
+    clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 7% 100%, -13% 0px);
+    &.small {
+      clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 17% 100%, -27% 0px);
+    }
+  }
+  &__placeholder {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 25px;
+    line-height: 32px;
+    color: #b5b5b5;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    transition: 0.3s;
+  }
+  &.active + &__placeholder,
+  &:focus + &__placeholder {
+    font-size: 16px;
+    top: 17px;
+    transform: translateX(-50%);
+    line-height: 21px;
+  }
+  &.active,
+  &:focus {
+    padding: 35px 15px 13px;
+  }
+  &.small {
+    clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 17% 100%, -27% 0px);
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

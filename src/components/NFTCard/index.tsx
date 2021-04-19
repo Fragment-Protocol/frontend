@@ -4,8 +4,8 @@ import { Progress } from 'antd';
 import InfoImg from '../../assets/img/icons/info.svg';
 import StarImg from '../../assets/img/icons/star.svg';
 import TokenImg from '../../assets/img/mock/token.jpg';
-import Button from '../Button';
 import { useModalContext } from '../../contexts/ModalContext';
+import Button from '../Button';
 
 import './NFTCard.scss';
 

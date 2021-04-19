@@ -2,9 +2,9 @@ import React from 'react';
 
 import PreviewImg from '../../assets/img/preview.png';
 import { Button, NFTCard } from '../../components';
-import { useModalContext } from '../../contexts/ModalContext';
 import config from '../../config';
 import { useConnectorContext } from '../../contexts/Connector';
+import { useModalContext } from '../../contexts/ModalContext';
 
 import './Home.scss';
 
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     if (connector.network === config.networkEth) {
       modalContext.handleChangeVisible('address', true);
     } else {
-      modalContext.handleError(`please choose ${config.networkEth} in metamask wallet`);
+      modalContext.handleError('eth');
     }
   };
 

@@ -1,13 +1,14 @@
 import React, { createContext, useContext } from 'react';
 
-import MetamaskService from '../services/web3';
 import config from '../config';
+import MetamaskService from '../services/web3';
 
 const connectorContext = createContext<any>({
   MetamaskService: {},
   connect: (): void => {},
   address: '',
   network: '',
+  errMsg: '',
 });
 
 class Connector extends React.Component<any, any> {
@@ -16,11 +17,12 @@ class Connector extends React.Component<any, any> {
 
     this.state = {
       provider: new MetamaskService({
-        testnetEth: 'kovan',
+        testnetEth: 'rinkeby',
         isProduction: config.isProduction,
       }),
       address: '',
       network: '',
+      errMsg: '',
     };
 
     this.connect = this.connect.bind(this);
@@ -34,13 +36,11 @@ class Connector extends React.Component<any, any> {
     }
 
     this.state.provider.chainChangedObs.subscribe({
-      next(chain: string) {
+      next({ network, err }: any) {
         self.setState({
-          network: chain,
+          network,
+          errMsg: err,
         });
-      },
-      error(err: string) {
-        console.log(err, 'metamask');
       },
     });
   }
@@ -78,6 +78,7 @@ class Connector extends React.Component<any, any> {
           disconnect: this.disconnect,
           address: this.state.address,
           network: this.state.network,
+          errMsg: this.state.errMsg,
         }}
       >
         {this.props.children}

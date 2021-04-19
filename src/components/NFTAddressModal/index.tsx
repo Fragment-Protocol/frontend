@@ -1,19 +1,21 @@
 import React from 'react';
 
+import { useModalContext } from '../../contexts/ModalContext';
 import Button from '../Button';
 import Input from '../Input';
-import { useModalContext } from '../../contexts/ModalContext';
 import Modal from '../Modal';
 
 import './NFTAddressModal.scss';
 
 const NFTAddressModal: React.FC = () => {
   const [address, setAddress] = React.useState('');
+  const [id, setId] = React.useState('');
   const modalContext = useModalContext();
 
-  const handleContinue = (): void => {
-    modalContext.handleChangeVisible('token', true);
+  const handleContinue = () => {
+    modalContext.handleSetNft(address, id);
     modalContext.handleChangeVisible('address', false);
+    modalContext.handleChangeVisible('end', true);
   };
   return (
     <Modal name="address">
@@ -27,11 +29,18 @@ const NFTAddressModal: React.FC = () => {
           className="m-deposit__input"
           value={address}
           placeholder="Paste Contract Address"
-          type="number"
+          type="text"
           onChange={(e) => setAddress(e.target.value)}
         />
+        <Input
+          className="m-deposit__input"
+          value={id}
+          placeholder="NFT ID"
+          type="text"
+          onChange={(e) => setId(e.target.value)}
+        />
         <Button
-          disabled={!address}
+          disabled={!address || !id}
           colorScheme="white"
           className="m-deposit__btn"
           onClick={handleContinue}

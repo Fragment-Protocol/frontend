@@ -8,6 +8,10 @@ const defaultValues = {
   connect: false,
   disconnect: false,
   errMsg: '',
+  nft: {
+    address: '',
+    id: '',
+  },
 };
 
 const Context = createContext<any>({
@@ -23,6 +27,7 @@ interface IState {
   connect: boolean;
   disconnect: boolean;
   errMsg: string;
+  nft: any;
 }
 
 class ModalContext extends React.Component<any, IState> {
@@ -32,6 +37,8 @@ class ModalContext extends React.Component<any, IState> {
     this.state = defaultValues;
 
     this.handleChangeVisible = this.handleChangeVisible.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleSetNft = this.handleSetNft.bind(this);
   }
 
   handleChangeVisible = (modalName: string, value: boolean): void => {
@@ -50,7 +57,15 @@ class ModalContext extends React.Component<any, IState> {
         errMsg: value,
       };
     });
-    console.log(this.state, 'state');
+  };
+
+  handleSetNft = (address: string, id: string) => {
+    this.setState({
+      nft: {
+        address,
+        id,
+      },
+    });
   };
 
   render() {
@@ -64,8 +79,10 @@ class ModalContext extends React.Component<any, IState> {
           connect: this.state.connect,
           disconnect: this.state.disconnect,
           errMsg: this.state.errMsg,
+          nft: this.state.nft,
           handleChangeVisible: this.handleChangeVisible,
           handleError: this.handleError,
+          handleSetNft: this.handleSetNft,
         }}
       >
         {this.props.children}

@@ -4,11 +4,11 @@ import {
   DepositModal,
   DisconnectModal,
   EndStepModal,
+  ErrorModal,
   Header,
   MetamaskModal,
   NFTAddressModal,
   SecondStepModal,
-  ErrorModal,
 } from './components';
 import { HomePage } from './pages';
 

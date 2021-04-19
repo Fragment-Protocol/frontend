@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js/bignumber';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
+import config from './config';
 
 declare global {
   interface Window {
@@ -48,6 +49,8 @@ export default class MetamaskService {
 
   public usedNetworkBnc: string;
 
+  public ethContract: any;
+
   constructor({ testnetEth, isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
     this.web3Provider = new Web3(this.wallet);
@@ -60,18 +63,22 @@ export default class MetamaskService {
     this.usedNetworkBnc = this.isProduction ? 'bnc' : this.testnetBnc;
     this.usedChainBnc = this.isProduction ? networks.bnc : networks[this.testnetBnc];
 
+    this.ethContract = this.getContract(config.ETH.ADDRESS, config.ETH.ABI);
+
     this.chainChangedObs = new Observable((subscriber) => {
       this.wallet.on('chainChanged', () => {
         const currentChain = this.wallet.chainId;
 
         if (currentChain !== this.usedChainEth && currentChain !== this.usedChainBnc) {
-          subscriber.error(
-            `Please choose ${this.usedNetworkEth} or binance smart testnet chain network in metamask wallet.`,
-          );
+          subscriber.next({
+            err: `Please choose ${this.usedNetworkEth} or binance smart testnet chain network in metamask wallet.`,
+            network: '',
+          });
         } else {
-          subscriber.next(
-            currentChain === this.usedChainEth ? this.usedNetworkEth : this.usedNetworkBnc,
-          );
+          subscriber.next({
+            network: currentChain === this.usedChainEth ? this.usedNetworkEth : this.usedNetworkBnc,
+            err: '',
+          });
         }
       });
     });
@@ -179,20 +186,17 @@ export default class MetamaskService {
     }
   }
 
-  async approveToken(
+  public async approveToken(
     tokenAddress: string,
-    abi: Array<any>,
-    tokenDecimals: number,
+    tokenId: string | number,
     walletAddress?: string,
   ) {
     try {
-      const totalSupply = await this.totalSupply(tokenAddress, abi, tokenDecimals);
-
-      const approveMethod = MetamaskService.getMethodInterface(abi, 'approve');
+      const approveMethod = MetamaskService.getMethodInterface(config.NFT.ABI, 'approve');
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
-        tokenAddress,
-        MetamaskService.calcTransactionAmount(totalSupply, tokenDecimals),
+        config.ETH.ADDRESS,
+        tokenId,
       ]);
 
       return this.sendTransaction({
@@ -211,21 +215,20 @@ export default class MetamaskService {
       .toString(10);
   }
 
-  createTransaction(
-    abi: Array<any>,
+  public createTransaction(
+    contract: 'ETH' | 'BSC',
     method: string,
     data: Array<any>,
-    tokenAddress: string,
     walletAddress?: string,
     value?: any,
   ) {
-    const transactionMethod = MetamaskService.getMethodInterface(abi, method);
+    const transactionMethod = MetamaskService.getMethodInterface(config[contract].ABI, method);
 
     const approveSignature = this.encodeFunctionCall(transactionMethod, data);
 
     return this.sendTransaction({
       from: walletAddress || this.walletAddress,
-      to: tokenAddress,
+      to: config[contract].ADDRESS,
       data: approveSignature,
       value: value || '',
     });

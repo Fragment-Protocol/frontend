@@ -47,7 +47,7 @@ const Button: React.FC<ButtonProps> = ({
         },
       )}
     >
-      {children}
+      {loading ? 'Loading' : children}
     </BtnAntd>
   );
 };

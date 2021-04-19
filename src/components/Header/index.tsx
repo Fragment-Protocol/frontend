@@ -2,9 +2,9 @@ import React from 'react';
 
 import LogoImg from '../../assets/img/icons/logo.svg';
 import MetamaskImg from '../../assets/img/icons/metamask.svg';
-import Button from '../Button';
-import { useModalContext } from '../../contexts/ModalContext';
 import { useConnectorContext } from '../../contexts/Connector';
+import { useModalContext } from '../../contexts/ModalContext';
+import Button from '../Button';
 
 import './Header.scss';
 

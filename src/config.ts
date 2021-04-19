@@ -1,4 +1,5 @@
 export default {
   isProduction: false,
-  networkEth: 'kovan',
+  networkEth: 'rinkeby',
+  networkBsc: 'bnct',
 };

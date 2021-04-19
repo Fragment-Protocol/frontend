@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Button from '../Button';
-import Modal from '../Modal';
 import { useConnectorContext } from '../../contexts/Connector';
 import { useModalContext } from '../../contexts/ModalContext';
+import Button from '../Button';
+import Modal from '../Modal';
 
 import './DisconnectModal.scss';
 

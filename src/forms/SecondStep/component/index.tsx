@@ -10,6 +10,7 @@ export interface ISecondStep {
   shortName: string;
   amount: string;
   decimals: string;
+  isLoading: boolean;
 }
 
 const SecondStep: React.FC<FormikProps<ISecondStep>> = ({
@@ -94,6 +95,7 @@ const SecondStep: React.FC<FormikProps<ISecondStep>> = ({
         colorScheme="white"
         className="form__step-btn"
         onClick={onSubmit}
+        loading={values.isLoading}
       >
         CREATE
       </Button>

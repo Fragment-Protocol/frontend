@@ -4,14 +4,12 @@ import { observer } from 'mobx-react-lite';
 import PreviewImg from '../../assets/img/preview.png';
 import { Button, NFTCard } from '../../components';
 import config from '../../config';
-import { useConnectorContext } from '../../contexts/Connector';
 import { useMst } from '../../store/store';
 
 import './Home.scss';
 
 const Home: React.FC = observer(() => {
-  const { modals } = useMst();
-  const connector = useConnectorContext();
+  const { modals, user } = useMst();
   const cards = [
     {
       name: 'HASHMASKS',
@@ -29,8 +27,8 @@ const Home: React.FC = observer(() => {
     },
   ];
   const handleOpenAddressModal = (): void => {
-    if (connector.address) {
-      if (connector.network === config.networkEth) {
+    if (user.address) {
+      if (user.network === config.networkEth) {
         modals.changeVisible('address', true);
       } else {
         modals.handleError('eth');

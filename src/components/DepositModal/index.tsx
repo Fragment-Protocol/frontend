@@ -1,13 +1,33 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import Button from '../Button';
 import Input from '../Input';
+import { useConnectorContext } from '../../contexts/Connector';
+import { useMst } from '../../store/store';
 import Modal from '../Modal';
 
 import './DepositModal.scss';
 
-const DepositModal: React.FC = () => {
+const DepositModal: React.FC = observer(() => {
+  const { modals } = useMst();
   const [amount, setAmount] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const connectContext = useConnectorContext();
+
+  const handleDeposit = async () => {
+    try {
+      await connectContext.metamaskService.createTransaction('BSC', 'returnTokens', [
+        'address',
+        amount,
+      ]);
+
+      setLoading(false);
+      modals.changeVisible('deposit', false);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
 
   return (
     <Modal name="deposit">
@@ -21,12 +41,18 @@ const DepositModal: React.FC = () => {
           type="number"
           onChange={(e) => setAmount(e.target.value)}
         />
-        <Button disabled={!amount} colorScheme="white" className="m-deposit__btn">
+        <Button
+          disabled={!amount}
+          colorScheme="white"
+          className="m-deposit__btn"
+          loading={loading}
+          onClick={handleDeposit}
+        >
           Deposit
         </Button>
       </div>
     </Modal>
   );
-};
+});
 
 export default DepositModal;

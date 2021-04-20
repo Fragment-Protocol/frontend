@@ -12,7 +12,7 @@ import { useMst } from '../../../store/store';
 import SecondStep, { ISecondStep } from '../component';
 
 export default observer(() => {
-  const { modals } = useMst();
+  const { modals, user } = useMst();
   const connectContext = useConnectorContext();
   const FormWithFormik = withFormik<any, ISecondStep>({
     enableReinitialize: true,
@@ -32,7 +32,7 @@ export default observer(() => {
     handleSubmit: async (values, { setFieldValue }) => {
       setFieldValue('isLoading', true);
       try {
-        if (connectContext.network !== config.networkBsc) {
+        if (user.network !== config.networkBsc) {
           modals.handleError('bsc');
           setFieldValue('isLoading', false);
         } else {
@@ -41,7 +41,7 @@ export default observer(() => {
             values.shortName,
             values.decimals,
             values.amount,
-            connectContext.address,
+            user.address,
           ]);
 
           setFieldValue('isLoading', false);

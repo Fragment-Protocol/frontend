@@ -12,7 +12,7 @@ import { useMst } from '../../../store/store';
 import SecondStep, { ISecondStep } from '../component';
 
 export default observer(() => {
-  const { modals, user } = useMst();
+  const { modals, user, cards } = useMst();
   const connectContext = useConnectorContext();
   const FormWithFormik = withFormik<any, ISecondStep>({
     enableReinitialize: true,
@@ -36,16 +36,23 @@ export default observer(() => {
           modals.handleError('bsc');
           setFieldValue('isLoading', false);
         } else {
-          await connectContext.metamaskService.createTransaction('BSC', 'deployNewToken', [
-            values.name,
+          const data = await connectContext.metamaskService.createTransaction(
+            'BSC',
+            'deployNewToken',
+            [values.name, values.shortName, values.decimals, values.amount, user.address],
+          );
+
+          console.log(data, 'data');
+
+          await connectContext.metamaskService.addToken(
+            data.logs[0].address,
             values.shortName,
             values.decimals,
-            values.amount,
-            user.address,
-          ]);
+          );
 
           setFieldValue('isLoading', false);
           modals.changeVisible('token', false);
+          await cards.getItems();
         }
       } catch (err) {
         console.log(err, 'err');

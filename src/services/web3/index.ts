@@ -234,6 +234,20 @@ export default class MetamaskService {
     });
   }
 
+  public async addToken(address: string, symbol: string, decimals: number | string) {
+    await this.wallet.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address,
+          symbol,
+          decimals,
+        },
+      },
+    });
+  }
+
   signMsg(msg: string) {
     return this.web3Provider.eth.personal.sign(msg, this.walletAddress, '');
   }

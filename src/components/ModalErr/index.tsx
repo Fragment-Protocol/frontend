@@ -28,6 +28,7 @@ const ModalErr: React.FC<IModal> = observer(
         visible={!!modals.errMsg}
         footer={false}
         closable={false}
+        zIndex={2000}
         onCancel={onCancel}
         centered
         width={width}

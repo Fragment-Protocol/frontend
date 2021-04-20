@@ -9,23 +9,8 @@ import { useMst } from '../../store/store';
 import './Home.scss';
 
 const Home: React.FC = observer(() => {
-  const { modals, user } = useMst();
-  const cards = [
-    {
-      name: 'HASHMASKS',
-      price: '250 000',
-      totalSypply: 1000,
-      sold: 250,
-      star: true,
-    },
-    {
-      name: 'HASHMASKS',
-      price: '250 000',
-      totalSypply: 1000,
-      sold: 250,
-      isWithdraw: true,
-    },
-  ];
+  const { modals, user, cards } = useMst();
+
   const handleOpenAddressModal = (): void => {
     if (user.address) {
       if (user.network === config.networkEth) {
@@ -37,6 +22,10 @@ const Home: React.FC = observer(() => {
       modals.changeVisible('connect', true);
     }
   };
+
+  React.useEffect(() => {
+    cards.getItems();
+  }, [cards]);
 
   return (
     <main className="home">
@@ -60,8 +49,16 @@ const Home: React.FC = observer(() => {
       </div>
       <div className="home__content">
         <div className="row home__content-row">
-          {cards.map((item) => (
-            <NFTCard {...item} />
+          {cards.items.map((item) => (
+            <NFTCard
+              name={item.bep20.name}
+              price={0}
+              totalSypply={item.bep20.total}
+              sold={item.bep20.current_balance}
+              isWithdraw={item.ready_to_withdraw}
+              me={item.owner === user.address}
+              tokenAddress={item.bep20.tokenAddress}
+            />
           ))}
         </div>
       </div>

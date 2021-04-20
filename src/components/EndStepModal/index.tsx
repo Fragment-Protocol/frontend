@@ -12,6 +12,7 @@ import './EndStepModal.scss';
 const EndStepModal: React.FC = observer(() => {
   const { modals } = useMst();
   const [loading, setLoading] = React.useState(false);
+  const [isApproved, setApproved] = React.useState(false);
   const connectContext = useConnectorContext();
 
   const handleBack = (): void => {
@@ -19,16 +20,29 @@ const EndStepModal: React.FC = observer(() => {
     modals.changeVisible('end', false);
   };
 
-  const handleEnd = async () => {
+  const handleApprove = async () => {
     setLoading(true);
     const { address, id } = modals.nft;
     try {
       await connectContext.metamaskService.approveToken(address, id);
-      await connectContext.metamaskService.createTransaction('ETH', 'depositNft', [address, id]);
+      setLoading(false);
+      setApproved(true);
+    } catch (err) {
+      setLoading(false);
+      setApproved(false);
+      console.log(err);
+    }
+  };
 
+  const handleEnd = async () => {
+    setLoading(true);
+    const { address, id } = modals.nft;
+    try {
+      await connectContext.metamaskService.createTransaction('ETH', 'depositNft', [address, id]);
       setLoading(false);
       modals.changeVisible('end', false);
       modals.changeVisible('token', true);
+      setApproved(false);
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -51,9 +65,20 @@ const EndStepModal: React.FC = observer(() => {
           After proceeding, your NFT will be locked up able to proceed to the creation of BEP-20
           tokens in the Binance network.
         </div>
-        <Button colorScheme="white" className="m-end__btn" onClick={handleEnd} loading={loading}>
-          <span className="text-upper">it&apos;s fine</span>
-        </Button>
+        {isApproved ? (
+          <Button colorScheme="white" className="m-end__btn" onClick={handleEnd} loading={loading}>
+            <span className="text-upper">it&apos;s fine</span>
+          </Button>
+        ) : (
+          <Button
+            colorScheme="white"
+            className="m-end__btn"
+            onClick={handleApprove}
+            loading={loading}
+          >
+            <span className="text-upper">approve</span>
+          </Button>
+        )}
       </div>
     </Modal>
   );

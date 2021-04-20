@@ -3,16 +3,21 @@ import { Instance, onSnapshot, types } from 'mobx-state-tree';
 
 import { Modals } from './Modals';
 import { User } from './User';
+import { Cards } from './Cards';
 
 const RootModel = types.model({
   modals: Modals,
   user: User,
+  cards: Cards,
 });
 export const Store = RootModel.create({
   user: {
     address: '',
     network: '',
     errMsg: '',
+  },
+  cards: {
+    items: [],
   },
   modals: {
     connect: false,

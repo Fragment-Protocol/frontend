@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  DepositModal,
   DisconnectModal,
   EndStepModal,
   ErrorModal,
@@ -22,7 +21,6 @@ const App: React.FC = () => {
       <HomePage />
       <MetamaskModal />
       <DisconnectModal />
-      <DepositModal />
       <NFTAddressModal />
       <SecondStepModal />
       <EndStepModal />

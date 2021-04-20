@@ -9,8 +9,12 @@ import Modal from '../Modal';
 
 import './DepositModal.scss';
 
-const DepositModal: React.FC = observer(() => {
-  const { modals } = useMst();
+interface IDepositModal {
+  tokenAddress: string;
+}
+
+const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress }) => {
+  const { modals, cards } = useMst();
   const [amount, setAmount] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const connectContext = useConnectorContext();
@@ -18,12 +22,13 @@ const DepositModal: React.FC = observer(() => {
   const handleDeposit = async () => {
     try {
       await connectContext.metamaskService.createTransaction('BSC', 'returnTokens', [
-        'address',
+        tokenAddress,
         amount,
       ]);
 
       setLoading(false);
       modals.changeVisible('deposit', false);
+      await cards.getItems();
     } catch (err) {
       setLoading(false);
     }

@@ -1,23 +1,24 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import LogoImg from '../../assets/img/icons/logo.svg';
 import MetamaskImg from '../../assets/img/icons/metamask.svg';
 import { useConnectorContext } from '../../contexts/Connector';
-import { useModalContext } from '../../contexts/ModalContext';
+import { useMst } from '../../store/store';
 import Button from '../Button';
 
 import './Header.scss';
 
-const Header: React.FC = React.memo(() => {
-  const modalContext = useModalContext();
+const Header: React.FC = observer(() => {
+  const { modals } = useMst();
   const connectorContext = useConnectorContext();
 
   const handleConnect = (): void => {
-    modalContext.handleChangeVisible('connect', true);
+    modals.changeVisible('connect', true);
   };
 
   const handleDisconnect = (): void => {
-    modalContext.handleChangeVisible('disconnect', true);
+    modals.changeVisible('disconnect', true);
   };
 
   return (

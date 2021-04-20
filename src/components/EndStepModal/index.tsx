@@ -1,33 +1,34 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import ArrowImg from '../../assets/img/icons/arrow.svg';
-import { useModalContext } from '../../contexts/ModalContext';
 import { useConnectorContext } from '../../contexts/Connector';
 import Button from '../Button';
 import Modal from '../Modal';
+import { useMst } from '../../store/store';
 
 import './EndStepModal.scss';
 
-const EndStepModal: React.FC = () => {
+const EndStepModal: React.FC = observer(() => {
+  const { modals } = useMst();
   const [loading, setLoading] = React.useState(false);
-  const modalContext = useModalContext();
   const connectContext = useConnectorContext();
 
   const handleBack = (): void => {
-    modalContext.handleChangeVisible('address', true);
-    modalContext.handleChangeVisible('end', false);
+    modals.changeVisible('address', true);
+    modals.changeVisible('end', false);
   };
 
   const handleEnd = async () => {
     setLoading(true);
-    const { address, id } = modalContext.nft;
+    const { address, id } = modals.nft;
     try {
       await connectContext.metamaskService.approveToken(address, id);
       await connectContext.metamaskService.createTransaction('ETH', 'depositNft', [address, id]);
 
       setLoading(false);
-      modalContext.handleChangeVisible('end', false);
-      modalContext.handleChangeVisible('token', true);
+      modals.changeVisible('end', false);
+      modals.changeVisible('token', true);
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -56,6 +57,6 @@ const EndStepModal: React.FC = () => {
       </div>
     </Modal>
   );
-};
+});
 
 export default EndStepModal;

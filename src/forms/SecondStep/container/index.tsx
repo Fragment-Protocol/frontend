@@ -3,15 +3,16 @@
 // eslint-disable-next-line no-param-reassign
 import React from 'react';
 import { withFormik } from 'formik';
+import { observer } from 'mobx-react-lite';
 
-import { useModalContext } from '../../../contexts/ModalContext';
 import { useConnectorContext } from '../../../contexts/Connector';
 import { validateForm } from '../../../utils/validate';
 import config from '../../../config';
+import { useMst } from '../../../store/store';
 import SecondStep, { ISecondStep } from '../component';
 
-export default () => {
-  const modalContext = useModalContext();
+export default observer(() => {
+  const { modals } = useMst();
   const connectContext = useConnectorContext();
   const FormWithFormik = withFormik<any, ISecondStep>({
     enableReinitialize: true,
@@ -30,10 +31,10 @@ export default () => {
 
     handleSubmit: async (values, { setFieldValue }) => {
       setFieldValue('isLoading', true);
-      debugger; // eslint-disable-line no-debugger
       try {
         if (connectContext.network !== config.networkBsc) {
-          modalContext.handleError('bsc');
+          modals.handleError('bsc');
+          setFieldValue('isLoading', false);
         } else {
           await connectContext.metamaskService.createTransaction('BSC', 'deployNewToken', [
             values.name,
@@ -44,7 +45,7 @@ export default () => {
           ]);
 
           setFieldValue('isLoading', false);
-          modalContext.handleChangeVisible('token', false);
+          modals.changeVisible('token', false);
         }
       } catch (err) {
         console.log(err, 'err');
@@ -55,4 +56,4 @@ export default () => {
     displayName: 'ChangePasswordForm',
   })(SecondStep);
   return <FormWithFormik />;
-};
+});

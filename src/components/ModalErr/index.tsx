@@ -11,14 +11,13 @@ interface IModal {
   handleCancel?: () => void;
   className?: string;
   width?: string | number;
-  name: 'connect' | 'disconnect' | 'deposit' | 'address' | 'token' | 'end';
 }
 
-const Modal: React.FC<IModal> = observer(
-  ({ children, handleCancel, name, className, width = 'fit-content' }) => {
+const ModalErr: React.FC<IModal> = observer(
+  ({ children, handleCancel, className, width = 'fit-content' }) => {
     const { modals } = useMst();
     const onCancel = (): void => {
-      modals.changeVisible(name, false);
+      modals.handleError('');
       if (handleCancel) {
         handleCancel();
       }
@@ -26,7 +25,7 @@ const Modal: React.FC<IModal> = observer(
     return (
       <ModalAntd
         title={false}
-        visible={modals[name]}
+        visible={!!modals.errMsg}
         footer={false}
         closable={false}
         onCancel={onCancel}
@@ -49,4 +48,4 @@ const Modal: React.FC<IModal> = observer(
   },
 );
 
-export default Modal;
+export default ModalErr;

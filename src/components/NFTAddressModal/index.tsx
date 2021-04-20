@@ -1,21 +1,22 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { useModalContext } from '../../contexts/ModalContext';
 import Button from '../Button';
 import Input from '../Input';
 import Modal from '../Modal';
+import { useMst } from '../../store/store';
 
 import './NFTAddressModal.scss';
 
-const NFTAddressModal: React.FC = () => {
+const NFTAddressModal: React.FC = observer(() => {
+  const { modals } = useMst();
   const [address, setAddress] = React.useState('');
   const [id, setId] = React.useState('');
-  const modalContext = useModalContext();
 
   const handleContinue = () => {
-    modalContext.handleSetNft(address, id);
-    modalContext.handleChangeVisible('address', false);
-    modalContext.handleChangeVisible('end', true);
+    modals.setNftData(address, id);
+    modals.changeVisible('address', false);
+    modals.changeVisible('end', true);
   };
   return (
     <Modal name="address">
@@ -50,6 +51,6 @@ const NFTAddressModal: React.FC = () => {
       </div>
     </Modal>
   );
-};
+});
 
 export default NFTAddressModal;

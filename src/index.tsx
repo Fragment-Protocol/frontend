@@ -5,14 +5,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Connector from './contexts/Connector';
-import ModalContext from './contexts/ModalContext';
 import App from './App';
+import { Provider, rootStore } from './store/store';
 
 ReactDOM.render(
-  <Connector>
-    <ModalContext>
+  <Provider value={rootStore}>
+    <Connector>
       <App />
-    </ModalContext>
-  </Connector>,
+    </Connector>
+  </Provider>,
   document.getElementById('root'),
 );

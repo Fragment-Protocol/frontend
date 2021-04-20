@@ -1,30 +1,31 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { useModalContext } from '../../contexts/ModalContext';
 import Button from '../Button';
-import Modal from '../Modal';
+import ModalErr from '../ModalErr';
 import BscImg from '../../assets/img/icons/bsc.svg';
+import { useMst } from '../../store/store';
 import EthImg from '../../assets/img/icons/eth.svg';
 
 import './ErrorModal.scss';
 
-const MetamaskModal: React.FC = () => {
-  const modalContext = useModalContext();
+const MetamaskModal: React.FC = observer(() => {
+  const { modals } = useMst();
 
   const handleOk = (): void => {
-    modalContext.handleError('');
+    modals.handleError('');
   };
   return (
-    <Modal name="errMsg">
+    <ModalErr>
       <div className="m-error">
-        {modalContext.errMsg === 'eth' ? (
+        {modals.errMsg === 'eth' ? (
           <img src={EthImg} alt="" className="m-error__img" />
         ) : (
           <img src={BscImg} alt="" className="m-error__img" />
         )}
         <div className="text-lg text-white m-error__title">
           <p>Current Network mismatch.</p>
-          {modalContext.errMsg === 'eth' ? (
+          {modals.errMsg === 'eth' ? (
             <span>Please Select: Rinkeby network</span>
           ) : (
             <span>Please Select: Bsc testnet</span>
@@ -34,8 +35,8 @@ const MetamaskModal: React.FC = () => {
           Ok
         </Button>
       </div>
-    </Modal>
+    </ModalErr>
   );
-};
+});
 
 export default MetamaskModal;

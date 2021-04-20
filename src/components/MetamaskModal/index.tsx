@@ -1,19 +1,20 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { useConnectorContext } from '../../contexts/Connector';
-import { useModalContext } from '../../contexts/ModalContext';
+import { useMst } from '../../store/store';
 import Button from '../Button';
 import Modal from '../Modal';
 
 import './MetamaskModal.scss';
 
-const MetamaskModal: React.FC = () => {
+const MetamaskModal: React.FC = observer(() => {
+  const { modals } = useMst();
   const connectorContext = useConnectorContext();
-  const modalContext = useModalContext();
 
   const handleConnect = (): void => {
     connectorContext.connect().then(() => {
-      modalContext.handleChangeVisible('connect', false);
+      modals.changeVisible('connect', false);
     });
   };
   return (
@@ -27,6 +28,6 @@ const MetamaskModal: React.FC = () => {
       </div>
     </Modal>
   );
-};
+});
 
 export default MetamaskModal;

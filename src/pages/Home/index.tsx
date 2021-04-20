@@ -1,15 +1,16 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import PreviewImg from '../../assets/img/preview.png';
 import { Button, NFTCard } from '../../components';
 import config from '../../config';
 import { useConnectorContext } from '../../contexts/Connector';
-import { useModalContext } from '../../contexts/ModalContext';
+import { useMst } from '../../store/store';
 
 import './Home.scss';
 
-const Home: React.FC = React.memo(() => {
-  const modalContext = useModalContext();
+const Home: React.FC = observer(() => {
+  const { modals } = useMst();
   const connector = useConnectorContext();
   const cards = [
     {
@@ -30,12 +31,12 @@ const Home: React.FC = React.memo(() => {
   const handleOpenAddressModal = (): void => {
     if (connector.address) {
       if (connector.network === config.networkEth) {
-        modalContext.handleChangeVisible('address', true);
+        modals.changeVisible('address', true);
       } else {
-        modalContext.handleError('eth');
+        modals.handleError('eth');
       }
     } else {
-      modalContext.handleChangeVisible('connect', true);
+      modals.changeVisible('connect', true);
     }
   };
 

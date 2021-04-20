@@ -1,10 +1,11 @@
 import React from 'react';
 import { Progress } from 'antd';
+import { observer } from 'mobx-react-lite';
 
 import InfoImg from '../../assets/img/icons/info.svg';
 import StarImg from '../../assets/img/icons/star.svg';
 import TokenImg from '../../assets/img/mock/token.jpg';
-import { useModalContext } from '../../contexts/ModalContext';
+import { useMst } from '../../store/store';
 import Button from '../Button';
 
 import './NFTCard.scss';
@@ -18,12 +19,12 @@ interface INFTCarc {
   star?: boolean;
 }
 
-const NFTCard: React.FC<INFTCarc> = React.memo(
+const NFTCard: React.FC<INFTCarc> = observer(
   ({ name, price, totalSypply, sold, isWithdraw, star }) => {
-    const modalContext = useModalContext();
+    const { modals } = useMst();
 
     const handleDeposit = (): void => {
-      modalContext.handleChangeVisible('deposit', true);
+      modals.changeVisible('deposit', true);
     };
 
     return (

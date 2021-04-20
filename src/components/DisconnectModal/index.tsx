@@ -1,19 +1,20 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 import { useConnectorContext } from '../../contexts/Connector';
-import { useModalContext } from '../../contexts/ModalContext';
 import Button from '../Button';
 import Modal from '../Modal';
+import { useMst } from '../../store/store';
 
 import './DisconnectModal.scss';
 
-const MetamaskModal: React.FC = () => {
+const MetamaskModal: React.FC = observer(() => {
+  const { modals } = useMst();
   const connectorContext = useConnectorContext();
-  const modalContext = useModalContext();
 
   const handleDiconnect = (): void => {
     connectorContext.disconnect();
-    modalContext.handleChangeVisible('disconnect', false);
+    modals.changeVisible('disconnect', false);
   };
   return (
     <Modal name="disconnect">
@@ -25,6 +26,6 @@ const MetamaskModal: React.FC = () => {
       </div>
     </Modal>
   );
-};
+});
 
 export default MetamaskModal;

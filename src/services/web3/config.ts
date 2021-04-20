@@ -197,7 +197,7 @@ export default {
     ],
   },
   ETH: {
-    ADDRESS: '0x938A1a961329772FebdF5e4Cea6830865b9b2c1C',
+    ADDRESS: '0x4D505B66D83E9A7d8DAFa8e5938330A2477813Af',
     ABI: [
       {
         inputs: [{ internalType: 'address', name: '_back', type: 'address' }],
@@ -271,7 +271,8 @@ export default {
       {
         inputs: [
           { internalType: 'address', name: 'owner', type: 'address' },
-          { internalType: 'uint256', name: 'index', type: 'uint256' },
+          { internalType: 'address', name: 'nftAddress', type: 'address' },
+          { internalType: 'uint256', name: 'nftId', type: 'uint256' },
         ],
         name: 'unlock',
         outputs: [],
@@ -279,7 +280,11 @@ export default {
         type: 'function',
       },
       {
-        inputs: [{ internalType: 'uint256', name: 'index', type: 'uint256' }],
+        inputs: [
+          { internalType: 'address', name: 'nftAddress', type: 'address' },
+          { internalType: 'uint256', name: 'nftId', type: 'uint256' },
+          { internalType: 'address', name: 'to', type: 'address' },
+        ],
         name: 'withdrawNft',
         outputs: [],
         stateMutability: 'nonpayable',

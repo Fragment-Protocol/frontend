@@ -8,7 +8,7 @@ import Button from '../Button';
 
 import './Header.scss';
 
-const Header: React.FC = () => {
+const Header: React.FC = React.memo(() => {
   const modalContext = useModalContext();
   const connectorContext = useConnectorContext();
 
@@ -44,6 +44,6 @@ const Header: React.FC = () => {
       </div>
     </header>
   );
-};
+});
 
 export default Header;

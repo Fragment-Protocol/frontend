@@ -20,36 +20,38 @@ export interface ButtonProps extends IColorScheme, ISize {
   shadow?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  className,
-  size = 'md',
-  colorScheme,
-  onClick,
-  disabled = false,
-  loading = false,
-  shadow,
-}) => {
-  return (
-    <BtnAntd
-      onClick={onClick}
-      disabled={disabled || loading}
-      className={classNames(
-        className,
-        'text text-bold btn',
-        `btn-${size}`,
-        `${colorScheme ? `btn-${colorScheme}` : ''}`,
-        {
-          'box-shadow': shadow,
-          'btn-loading': loading,
-          'text-lg': size === 'md',
-          'text-sm': size === 'sm',
-        },
-      )}
-    >
-      {loading ? 'Loading' : children}
-    </BtnAntd>
-  );
-};
+const Button: React.FC<ButtonProps> = React.memo(
+  ({
+    children,
+    className,
+    size = 'md',
+    colorScheme,
+    onClick,
+    disabled = false,
+    loading = false,
+    shadow,
+  }) => {
+    return (
+      <BtnAntd
+        onClick={onClick}
+        disabled={disabled || loading}
+        className={classNames(
+          className,
+          'text text-bold btn',
+          `btn-${size}`,
+          `${colorScheme ? `btn-${colorScheme}` : ''}`,
+          {
+            'box-shadow': shadow,
+            'btn-loading': loading,
+            'text-lg': size === 'md',
+            'text-sm': size === 'sm',
+          },
+        )}
+      >
+        {loading ? 'Loading' : children}
+      </BtnAntd>
+    );
+  },
+);
 
 export default Button;

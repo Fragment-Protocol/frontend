@@ -8,7 +8,7 @@ import { useModalContext } from '../../contexts/ModalContext';
 
 import './Home.scss';
 
-const Home: React.FC = () => {
+const Home: React.FC = React.memo(() => {
   const modalContext = useModalContext();
   const connector = useConnectorContext();
   const cards = [
@@ -28,10 +28,14 @@ const Home: React.FC = () => {
     },
   ];
   const handleOpenAddressModal = (): void => {
-    if (connector.network === config.networkEth) {
-      modalContext.handleChangeVisible('address', true);
+    if (connector.address) {
+      if (connector.network === config.networkEth) {
+        modalContext.handleChangeVisible('address', true);
+      } else {
+        modalContext.handleError('eth');
+      }
     } else {
-      modalContext.handleError('eth');
+      modalContext.handleChangeVisible('connect', true);
     }
   };
 
@@ -64,6 +68,6 @@ const Home: React.FC = () => {
       </div>
     </main>
   );
-};
+});
 
 export default Home;

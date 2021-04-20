@@ -53,6 +53,7 @@ class Connector extends React.Component<any, any> {
     } catch (error) {
       console.log(error, 'connect err');
 
+      rootStore.modals.handleError('eth');
       this.disconnect();
     }
   };

@@ -188,16 +188,14 @@ export default class MetamaskService {
 
   public async approveToken(
     tokenAddress: string,
-    tokenId: string | number,
+    contract: 'ETH' | 'BSC' | 'NFT',
+    data: any,
     walletAddress?: string,
   ) {
     try {
-      const approveMethod = MetamaskService.getMethodInterface(config.NFT.ABI, 'approve');
+      const approveMethod = MetamaskService.getMethodInterface(config[contract].ABI, 'approve');
 
-      const approveSignature = this.encodeFunctionCall(approveMethod, [
-        config.ETH.ADDRESS,
-        tokenId,
-      ]);
+      const approveSignature = this.encodeFunctionCall(approveMethod, data);
 
       return this.sendTransaction({
         from: walletAddress || this.walletAddress,

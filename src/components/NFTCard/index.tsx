@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 
 import InfoImg from '../../assets/img/icons/info.svg';
 import StarImg from '../../assets/img/icons/star.svg';
-import TokenImg from '../../assets/img/mock/token.jpg';
 import { useMst } from '../../store/store';
 import config from '../../config';
 import Button from '../Button';
@@ -20,10 +19,12 @@ interface INFTCarc {
   isWithdraw?: boolean;
   tokenAddress: string;
   me?: boolean;
+  img?: string;
+  url?: string;
 }
 
 const NFTCard: React.FC<INFTCarc> = observer(
-  ({ name, price, totalSypply, sold, isWithdraw, me, tokenAddress }) => {
+  ({ name, price, totalSypply, sold, isWithdraw, me, tokenAddress, img, url }) => {
     const { modals, user } = useMst();
 
     const handleDeposit = (): void => {
@@ -34,13 +35,17 @@ const NFTCard: React.FC<INFTCarc> = observer(
       }
     };
 
+    // const handleWithDraw = async() => {
+
+    // }
+
     return (
       <>
         <div className="nft-card">
           {me ? <img src={StarImg} alt="me" className="nft-card__star" /> : ''}
-          <div className="nft-card__img">
-            <img src={TokenImg} alt="" />
-          </div>
+          <a href={url} target="_blank" rel="noreferrer" className="nft-card__img">
+            <img src={`http://${img}`} alt="" />
+          </a>
           <div className="nft-card__content">
             <div className="nft-card__info">
               <div className="nft-card__info-item">

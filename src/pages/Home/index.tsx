@@ -3,12 +3,14 @@ import { observer } from 'mobx-react-lite';
 
 import PreviewImg from '../../assets/img/preview.png';
 import { Button, NFTCard } from '../../components';
+import { useConnectorContext } from '../../contexts/Connector';
 import config from '../../config';
 import { useMst } from '../../store/store';
 
 import './Home.scss';
 
 const Home: React.FC = observer(() => {
+  const connect = useConnectorContext();
   const { modals, user, cards } = useMst();
 
   const handleOpenAddressModal = (): void => {
@@ -25,7 +27,7 @@ const Home: React.FC = observer(() => {
 
   React.useEffect(() => {
     cards.getItems();
-  }, [cards]);
+  }, [cards, connect.metamaskService]);
 
   return (
     <main className="home">
@@ -58,6 +60,8 @@ const Home: React.FC = observer(() => {
               isWithdraw={item.ready_to_withdraw}
               me={item.owner === user.address}
               tokenAddress={item.bep20.tokenAddress}
+              url={item.permalink ? item.permalink : ''}
+              img={item.image_url ? item.image_url : ''}
             />
           ))}
         </div>

@@ -5,6 +5,7 @@ import ArrowImg from '../../assets/img/icons/arrow.svg';
 import { useConnectorContext } from '../../contexts/Connector';
 import Button from '../Button';
 import Modal from '../Modal';
+import web3Config from '../../services/web3/config';
 import { useMst } from '../../store/store';
 
 import './EndStepModal.scss';
@@ -24,7 +25,10 @@ const EndStepModal: React.FC = observer(() => {
     setLoading(true);
     const { address, id } = modals.nft;
     try {
-      await connectContext.metamaskService.approveToken(address, id);
+      await connectContext.metamaskService.approveToken(address, 'NFT', [
+        web3Config.ETH.ADDRESS,
+        id,
+      ]);
       setLoading(false);
       setApproved(true);
     } catch (err) {

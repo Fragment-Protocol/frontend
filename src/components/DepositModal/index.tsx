@@ -6,6 +6,7 @@ import Input from '../Input';
 import { useConnectorContext } from '../../contexts/Connector';
 import { useMst } from '../../store/store';
 import Modal from '../Modal';
+import web3Config from '../../services/web3/config';
 
 import './DepositModal.scss';
 
@@ -21,6 +22,10 @@ const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress }) => {
 
   const handleDeposit = async () => {
     try {
+      await connectContext.metamaskService.approveToken(tokenAddress, 'BEP', [
+        web3Config.BSC.ADDRESS,
+        amount,
+      ]);
       await connectContext.metamaskService.createTransaction('BSC', 'returnTokens', [
         tokenAddress,
         amount,

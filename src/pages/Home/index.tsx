@@ -61,6 +61,7 @@ const Home: React.FC = observer(() => {
             .filter((item) => item.bep20)
             .map((item) => (
               <NFTCard
+                key={item.id}
                 name={item.bep20 ? item.bep20.name : ''}
                 totalSypply={item.bep20 ? item.bep20.total : 0}
                 id={item.id}

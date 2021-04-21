@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://fragmentprotocol.com:8000';
+axios.defaults.baseURL = 'https://fragmentprotocol.com/api';
 
 export default axios;

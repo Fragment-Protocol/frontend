@@ -8,10 +8,9 @@ export const User = types
     errMsg: types.string,
   })
   .actions((self) => ({
-    update(data: { address?: string; network?: string; errMsg?: string }) {
-      console.log(data.address, '123');
+    update(data: { address?: string; network: string; errMsg?: string }) {
       self.address = data.address || self.address;
-      self.network = data.network || self.network;
+      self.network = data.network;
       self.errMsg = data.errMsg || self.errMsg;
     },
     disconnect() {

@@ -14,9 +14,10 @@ import './DepositModal.scss';
 interface IDepositModal {
   tokenAddress: string;
   decimals: number;
+  tokenName: string;
 }
 
-const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress, decimals }) => {
+const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress, decimals, tokenName }) => {
   const { modals, cards } = useMst();
   const [amount, setAmount] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -47,7 +48,7 @@ const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress, decimals
     <Modal name="deposit">
       <div className="m-deposit">
         <div className="text-lg text-white m-deposit__title">Deposit</div>
-        <div className="text text-gray m-deposit__subtitle">sub head</div>
+        <div className="text text-gray m-deposit__subtitle">{tokenName}</div>
         <Input
           className="m-deposit__input"
           value={amount}

@@ -118,7 +118,7 @@ const NFTCard: React.FC<INFTCarc> = observer(
             )}
           </div>
         </div>
-        <DepositModal tokenAddress={tokenAddress} decimals={decimals} />
+        <DepositModal tokenAddress={tokenAddress} decimals={decimals} tokenName={name} />
       </>
     );
   },

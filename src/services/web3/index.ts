@@ -49,8 +49,6 @@ export default class MetamaskService {
 
   public usedNetworkBnc: string;
 
-  public ethContract: any;
-
   constructor({ testnetEth, isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
     this.web3Provider = new Web3(this.wallet);
@@ -62,8 +60,6 @@ export default class MetamaskService {
 
     this.usedNetworkBnc = this.isProduction ? 'bnc' : this.testnetBnc;
     this.usedChainBnc = this.isProduction ? networks.bnc : networks[this.testnetBnc];
-
-    this.ethContract = this.getContract(config.ETH.ADDRESS, config.ETH.ABI);
 
     this.chainChangedObs = new Observable((subscriber) => {
       this.wallet.on('chainChanged', () => {
@@ -141,6 +137,10 @@ export default class MetamaskService {
     });
   }
 
+  static calcTransactionAmount(amount: number, tokenDecimal: number) {
+    return new BigNumber(amount).times(new BigNumber(10).pow(tokenDecimal)).toString(10);
+  }
+
   getContract(tokenAddress: string, abi: Array<any>) {
     return new this.web3Provider.eth.Contract(abi, tokenAddress);
   }
@@ -155,35 +155,11 @@ export default class MetamaskService {
     return this.web3Provider.eth.abi.encodeFunctionCall(abi, data);
   }
 
-  async totalSupply(tokenAddress: string, abi: Array<any>, tokenDecimals: number) {
+  async totalSupply(tokenAddress: string, abi: any, tokenDecimals: number) {
     const contract = this.getContract(tokenAddress, abi);
     const totalSupply = await contract.methods.totalSupply().call();
 
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
-  }
-
-  async checkTokenAllowance(
-    tokenAddress: string,
-    contract: any,
-    abi: Array<any>,
-    tokenDecimals: number,
-    walletAddress?: string,
-  ) {
-    const walletAdr = walletAddress || this.walletAddress;
-
-    try {
-      let result = await contract.methods.allowance(walletAdr, tokenAddress).call();
-      const totalSupply = await this.totalSupply(tokenAddress, abi, tokenDecimals);
-
-      result = result ? result.toString(10) : result;
-      result = result === '0' ? null : result;
-      if (result && new BigNumber(result).minus(totalSupply).isPositive()) {
-        return true;
-      }
-      return false;
-    } catch (error) {
-      return false;
-    }
   }
 
   public async approveToken(
@@ -205,12 +181,6 @@ export default class MetamaskService {
     } catch (error) {
       return error;
     }
-  }
-
-  static calcTransactionAmount(amount: number, tokenDecimal: number) {
-    return new BigNumber(amount)
-      .times(new BigNumber(tokenDecimal).times(tokenDecimal))
-      .toString(10);
   }
 
   public createTransaction(

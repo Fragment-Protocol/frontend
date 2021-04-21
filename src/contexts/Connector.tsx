@@ -59,9 +59,7 @@ class Connector extends React.Component<any, any> {
   };
 
   disconnect = () => {
-    rootStore.user.update({
-      address: '',
-    });
+    rootStore.user.disconnect();
     delete localStorage.fragment_metamask;
   };
 

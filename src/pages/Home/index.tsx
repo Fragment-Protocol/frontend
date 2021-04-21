@@ -27,6 +27,12 @@ const Home: React.FC = observer(() => {
 
   React.useEffect(() => {
     cards.getItems();
+    const interval = setInterval(() => {
+      cards.getItems();
+    }, 60000);
+    return () => {
+      clearInterval(interval);
+    };
   }, [cards, connect.metamaskService]);
 
   return (
@@ -51,19 +57,22 @@ const Home: React.FC = observer(() => {
       </div>
       <div className="home__content">
         <div className="row home__content-row">
-          {cards.items.map((item) => (
-            <NFTCard
-              name={item.bep20.name}
-              price={0}
-              totalSypply={item.bep20.total}
-              sold={item.bep20.current_balance}
-              isWithdraw={item.ready_to_withdraw}
-              me={item.owner === user.address}
-              tokenAddress={item.bep20.tokenAddress}
-              url={item.permalink ? item.permalink : ''}
-              img={item.image_url ? item.image_url : ''}
-            />
-          ))}
+          {cards.items
+            .filter((item) => item.bep20)
+            .map((item) => (
+              <NFTCard
+                name={item.bep20 ? item.bep20.name : ''}
+                totalSypply={item.bep20 ? item.bep20.total : 0}
+                id={item.id}
+                sold={item.bep20 ? item.bep20.current_balance : 0}
+                isWithdraw={item.ready_to_withdraw}
+                me={item.owner.toLowerCase() === user.address.toLowerCase()}
+                tokenAddress={item.bep20 ? item.bep20.tokenAddress : ''}
+                url={item.permalink ? item.permalink : ''}
+                img={item.image_url ? item.image_url : ''}
+                decimals={item.bep20 ? item.bep20?.decimals : 18}
+              />
+            ))}
         </div>
       </div>
     </main>

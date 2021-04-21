@@ -31,6 +31,9 @@
     align-items: center;
     margin-top: 35px;
     margin-bottom: 12px;
+    img {
+      margin-right: 5px;
+    }
   }
   &__btn {
     & + & {
@@ -49,6 +52,9 @@
         text-align: right;
       }
     }
+  }
+  &__content {
+    width: 100%;
   }
   &__progress {
     margin-bottom: 13px;

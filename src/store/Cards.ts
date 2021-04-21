@@ -1,14 +1,16 @@
 import { types, flow, applySnapshot } from 'mobx-state-tree';
-import axios from 'axios';
+
+import axios from '../core/axios';
 /* eslint-disable no-param-reassign */
 
-const Bepoken = types.model({
+const BepToken = types.model({
   id: types.number,
   created_from: types.string,
   current_balance: types.string,
   name: types.string,
   tokenAddress: types.string,
   total: types.string,
+  decimals: types.number,
 });
 
 const Nft = types.model({
@@ -20,7 +22,7 @@ const Nft = types.model({
   permalink: types.maybeNull(types.string),
   owner: types.string,
   ready_to_withdraw: types.boolean,
-  bep20: Bepoken,
+  bep20: types.maybeNull(BepToken),
 });
 
 export const Cards = types
@@ -34,7 +36,7 @@ export const Cards = types
 
     const getItems = flow(function* getItems() {
       try {
-        const { data } = yield axios.get('http://fragmentprotocol.com:8000/locked_nft/');
+        const { data } = yield axios.get('/locked_nft/');
 
         update(data);
       } catch (err) {

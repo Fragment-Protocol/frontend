@@ -9,9 +9,13 @@ export const User = types
   })
   .actions((self) => ({
     update(data: { address?: string; network?: string; errMsg?: string }) {
+      console.log(data.address, '123');
       self.address = data.address || self.address;
       self.network = data.network || self.network;
       self.errMsg = data.errMsg || self.errMsg;
+    },
+    disconnect() {
+      self.address = '';
     },
   }));
 

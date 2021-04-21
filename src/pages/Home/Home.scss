@@ -4,6 +4,7 @@
   &__preview {
     position: relative;
     overflow: hidden;
+    padding-bottom: 60px;
     &-row {
       position: relative;
       padding-top: 95px;
@@ -37,7 +38,6 @@
     }
   }
   &__content {
-    margin-top: 60px;
     &-row {
       display: grid;
       grid-template-columns: 1fr 1fr;

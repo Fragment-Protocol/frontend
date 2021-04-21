@@ -59,6 +59,12 @@ const Home: React.FC = observer(() => {
         <div className="row home__content-row">
           {cards.items
             .filter((item) => item.bep20)
+            .sort((item) => {
+              if (item.owner.toLowerCase() === user.address.toLowerCase()) {
+                return 1;
+              }
+              return -1;
+            })
             .map((item) => (
               <NFTCard
                 key={item.id}

@@ -12,10 +12,11 @@ interface IModal {
   className?: string;
   width?: string | number;
   name: 'connect' | 'disconnect' | 'deposit' | 'address' | 'token' | 'end';
+  destroyOnClose?: boolean;
 }
 
 const Modal: React.FC<IModal> = observer(
-  ({ children, handleCancel, name, className, width = 'fit-content' }) => {
+  ({ children, handleCancel, name, className, width = 'fit-content', destroyOnClose }) => {
     const { modals } = useMst();
     const onCancel = (): void => {
       modals.changeVisible(name, false);
@@ -31,6 +32,7 @@ const Modal: React.FC<IModal> = observer(
         closable={false}
         onCancel={onCancel}
         centered
+        destroyOnClose={destroyOnClose}
         width={width}
         className={classNames('modal', className)}
       >

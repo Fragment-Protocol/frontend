@@ -168,19 +168,15 @@ export default class MetamaskService {
     data: any,
     walletAddress?: string,
   ) {
-    try {
-      const approveMethod = MetamaskService.getMethodInterface(config[contract].ABI, 'approve');
+    const approveMethod = MetamaskService.getMethodInterface(config[contract].ABI, 'approve');
 
-      const approveSignature = this.encodeFunctionCall(approveMethod, data);
+    const approveSignature = this.encodeFunctionCall(approveMethod, data);
 
-      return this.sendTransaction({
-        from: walletAddress || this.walletAddress,
-        to: tokenAddress,
-        data: approveSignature,
-      });
-    } catch (error) {
-      return error;
-    }
+    return this.sendTransaction({
+      from: walletAddress || this.walletAddress,
+      to: tokenAddress,
+      data: approveSignature,
+    });
   }
 
   public createTransaction(

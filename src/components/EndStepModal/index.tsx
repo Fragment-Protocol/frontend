@@ -49,12 +49,13 @@ const EndStepModal: React.FC = observer(() => {
       setApproved(false);
     } catch (err) {
       setLoading(false);
+      setApproved(false);
       console.log(err);
     }
   };
 
   return (
-    <Modal name="end">
+    <Modal name="end" destroyOnClose>
       <div className="m-end">
         <div
           className="m-end__back"

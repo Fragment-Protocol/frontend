@@ -3,6 +3,7 @@
   padding-bottom: 50px;
   &__preview {
     position: relative;
+    overflow: hidden;
     &-row {
       position: relative;
       padding-top: 95px;

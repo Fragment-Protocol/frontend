@@ -42,7 +42,12 @@ const EndStepModal: React.FC = observer(() => {
     setLoading(true);
     const { address, id } = modals.nft;
     try {
-      await connectContext.metamaskService.createTransaction('ETH', 'depositNft', [address, id]);
+      await connectContext.metamaskService.createTransaction(
+        'ETH',
+        'depositNft',
+        [address, id],
+        true,
+      );
       setLoading(false);
       modals.changeVisible('end', false);
       modals.changeVisible('token', true);
@@ -69,6 +74,9 @@ const EndStepModal: React.FC = observer(() => {
         <div className="text-bold text-xl text-white m-end__text">
           After proceeding, your NFT will be locked up able to proceed to the creation of BEP-20
           tokens in the Binance network.
+        </div>
+        <div className="m-end__subtitle text text-gray">
+          For this operation, we charge an additional commission to pay for service transactions
         </div>
         {isApproved ? (
           <Button colorScheme="white" className="m-end__btn" onClick={handleEnd} loading={loading}>

@@ -197,7 +197,7 @@ export default {
     ],
   },
   ETH: {
-    ADDRESS: '0xCc2A92E9451B30945079b51aa3A5042bBe2D6e33',
+    ADDRESS: '0xAf27d807f3b90905ade7754D69b27e8e639724A2',
     ABI: [
       {
         inputs: [{ internalType: 'address', name: '_back', type: 'address' }],

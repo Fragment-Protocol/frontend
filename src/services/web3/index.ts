@@ -6,6 +6,7 @@ import config from './config';
 declare global {
   interface Window {
     ethereum: any;
+    web3: any;
   }
 }
 interface INetworks {
@@ -52,6 +53,7 @@ export default class MetamaskService {
   constructor({ testnetEth, isProduction = false }: IMetamaskService) {
     this.wallet = window.ethereum;
     this.web3Provider = new Web3(this.wallet);
+    window.web3 = this.web3Provider;
     this.testnetEth = testnetEth;
     this.isProduction = isProduction;
 
@@ -179,23 +181,29 @@ export default class MetamaskService {
     });
   }
 
-  public createTransaction(
+  public async createTransaction(
     contract: 'ETH' | 'BSC',
     method: string,
     data: Array<any>,
+    isDoubleGas: boolean,
     walletAddress?: string,
-    value?: any,
   ) {
     const transactionMethod = MetamaskService.getMethodInterface(config[contract].ABI, method);
 
     const approveSignature = this.encodeFunctionCall(transactionMethod, data);
 
-    return this.sendTransaction({
+    const tx: any = {
       from: walletAddress || this.walletAddress,
       to: config[contract].ADDRESS,
       data: approveSignature,
-      value: value || '',
-    });
+    };
+
+    if (isDoubleGas) {
+      const gasPrice = await this.web3Provider.eth.getGasPrice();
+
+      tx.value = new BigNumber(gasPrice).times(44800).times(2).toString();
+    }
+    return this.sendTransaction(tx);
   }
 
   public async addToken(address: string, symbol: string, decimals: number | string) {

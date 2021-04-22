@@ -70,14 +70,17 @@ const Home: React.FC = observer(() => {
                 key={item.id}
                 name={item.bep20 ? item.bep20.name : ''}
                 totalSypply={item.bep20 ? item.bep20.total : 0}
-                id={item.id}
+                id={item.nftId}
+                tokenId={item.id}
                 sold={item.bep20 ? item.bep20.current_balance : 0}
                 isWithdraw={item.ready_to_withdraw}
                 me={item.owner.toLowerCase() === user.address.toLowerCase()}
                 tokenAddress={item.bep20 ? item.bep20.tokenAddress : ''}
+                nftTokenAddress={item.nftAddress}
                 url={item.permalink ? item.permalink : ''}
                 img={item.image_url ? item.image_url : ''}
                 decimals={item.bep20 ? item.bep20?.decimals : 18}
+                owner={item.owner}
               />
             ))}
         </div>

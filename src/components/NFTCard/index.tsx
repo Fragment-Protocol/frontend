@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js/bignumber';
 import InfoImg from '../../assets/img/icons/info.svg';
 import StarImg from '../../assets/img/icons/star.svg';
 import TokenImg from '../../assets/img/mock/token.jpg';
+import { useConnectorContext } from '../../contexts/Connector';
 import { useMst } from '../../store/store';
 import config from '../../config';
 import axios from '../../core/axios';
@@ -15,6 +16,7 @@ import './NFTCard.scss';
 
 interface INFTCarc {
   id: string | number;
+  tokenId: string | number;
   name: string;
   totalSypply: number | string;
   sold: number | string;
@@ -24,11 +26,28 @@ interface INFTCarc {
   img?: string;
   url?: string;
   decimals: number;
+  nftTokenAddress: string;
+  owner: string;
 }
 
 const NFTCard: React.FC<INFTCarc> = observer(
-  ({ name, totalSypply, sold, isWithdraw, me, tokenAddress, img, url, decimals, id }) => {
+  ({
+    name,
+    totalSypply,
+    sold,
+    isWithdraw,
+    me,
+    tokenAddress,
+    img,
+    url,
+    decimals,
+    id,
+    nftTokenAddress,
+    owner,
+    tokenId,
+  }) => {
     const { modals, user } = useMst();
+    const connectContext = useConnectorContext();
 
     const handleDeposit = (): void => {
       console.log(tokenAddress, decimals);
@@ -45,8 +64,18 @@ const NFTCard: React.FC<INFTCarc> = observer(
     };
 
     const handleWithDraw = async () => {
+      console.log(nftTokenAddress, id, owner);
       if (user.address) {
-        axios.post(`/locked_nft/${id}/unlock/`);
+        if (user.network !== config.networkEth) {
+          modals.handleError('eth');
+        } else {
+          await connectContext.metamaskService.createTransaction('ETH', 'withdrawNft', [
+            nftTokenAddress,
+            id,
+            owner,
+          ]);
+          await axios.post(`/locked_nft/${tokenId}/unlock/`);
+        }
       } else {
         modals.changeVisible('connect', true);
       }

@@ -31,6 +31,11 @@ export const Store = RootModel.create({
       address: '',
       id: '',
     },
+    depositData: {
+      tokenAddress: '',
+      decimals: 0,
+      tokenName: '',
+    },
   },
 });
 

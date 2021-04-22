@@ -11,13 +11,7 @@ import web3Config from '../../services/web3/config';
 
 import './DepositModal.scss';
 
-interface IDepositModal {
-  tokenAddress: string;
-  decimals: number;
-  tokenName: string;
-}
-
-const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress, decimals, tokenName }) => {
+const DepositModal: React.FC = observer(() => {
   const { modals, cards } = useMst();
   const [amount, setAmount] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -25,14 +19,15 @@ const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress, decimals
 
   const handleDeposit = async () => {
     setLoading(true);
+    console.log(modals.depositData.tokenAddress, modals.depositData.decimals);
     try {
-      await connectContext.metamaskService.approveToken(tokenAddress, 'BEP', [
+      await connectContext.metamaskService.approveToken(modals.depositData.tokenAddress, 'BEP', [
         web3Config.BSC.ADDRESS,
-        MetamaskService.calcTransactionAmount(+amount, decimals),
+        MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals),
       ]);
       await connectContext.metamaskService.createTransaction('BSC', 'returnTokens', [
-        tokenAddress,
-        MetamaskService.calcTransactionAmount(+amount, decimals),
+        modals.depositData.tokenAddress,
+        MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals),
       ]);
 
       setLoading(false);
@@ -45,10 +40,10 @@ const DepositModal: React.FC<IDepositModal> = observer(({ tokenAddress, decimals
   };
 
   return (
-    <Modal name="deposit">
+    <Modal name="deposit" destroyOnClose>
       <div className="m-deposit">
         <div className="text-lg text-white m-deposit__title">Deposit</div>
-        <div className="text text-gray m-deposit__subtitle">{tokenName}</div>
+        <div className="text text-gray m-deposit__subtitle">{modals.depositData.tokenName}</div>
         <Input
           className="m-deposit__input"
           value={amount}

@@ -58,7 +58,7 @@ const Home: React.FC = observer(() => {
       <div className="home__content">
         <div className="row home__content-row">
           {cards.items
-            .filter((item) => item.bep20)
+            .filter((item) => item.bep20 && !item.bep20.burned)
             .sort((_, nextItem) => {
               if (nextItem.owner.toLowerCase() === user.address.toLowerCase()) {
                 return 1;

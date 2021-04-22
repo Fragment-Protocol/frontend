@@ -8,6 +8,7 @@ import {
   MetamaskModal,
   NFTAddressModal,
   SecondStepModal,
+  DepositModal,
 } from './components';
 import { HomePage } from './pages';
 
@@ -25,6 +26,7 @@ const App: React.FC = () => {
       <SecondStepModal />
       <EndStepModal />
       <ErrorModal />
+      <DepositModal />
     </div>
   );
 };

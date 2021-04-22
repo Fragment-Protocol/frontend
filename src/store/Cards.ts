@@ -11,6 +11,7 @@ const BepToken = types.model({
   tokenAddress: types.string,
   total: types.string,
   decimals: types.number,
+  burned: types.boolean,
 });
 
 const Nft = types.model({

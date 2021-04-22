@@ -4,6 +4,12 @@ const Nft = types.model({
   address: types.string,
   id: types.string,
 });
+
+const Deposit = types.model({
+  tokenAddress: types.string,
+  decimals: types.number,
+  tokenName: types.string,
+});
 /* eslint-disable no-param-reassign */
 export const Modals = types
   .model({
@@ -15,6 +21,7 @@ export const Modals = types
     end: types.boolean,
     errMsg: types.string,
     nft: Nft,
+    depositData: Deposit,
   })
   .actions((self) => ({
     changeVisible(
@@ -29,6 +36,13 @@ export const Modals = types
     setNftData(address: string, id: string) {
       self.nft.address = address;
       self.nft.id = id;
+    },
+    setDepositData(tokenAddress: string, decimals: number, tokenName: string) {
+      self.depositData = {
+        tokenAddress,
+        decimals,
+        tokenName,
+      };
     },
   }));
 /* eslint-disable no-param-reassign */

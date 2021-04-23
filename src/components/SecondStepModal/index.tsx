@@ -7,7 +7,7 @@ import './SecondStepModal.scss';
 
 const SecondStepModal: React.FC = () => {
   return (
-    <Modal name="token">
+    <Modal name="token" destroyOnClose>
       <div className="m-step">
         <div className="text-lg m-step__title text-white">Step 2</div>
         <SecondStepForm />

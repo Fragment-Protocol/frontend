@@ -18,8 +18,14 @@ const NFTAddressModal: React.FC = observer(() => {
     modals.changeVisible('address', false);
     modals.changeVisible('approveLock', true);
   };
+
+  const handleClose = () => {
+    setAddress('');
+    setId('');
+  };
+
   return (
-    <Modal name="address">
+    <Modal name="address" destroyOnClose handleCancel={handleClose}>
       <div className="m-deposit m-nft-addr">
         <div className="text-lg text-white m-deposit__title">NFT Contract Address:</div>
         <div className="text text-gray m-deposit__subtitle m-nft-addr__subtitle">

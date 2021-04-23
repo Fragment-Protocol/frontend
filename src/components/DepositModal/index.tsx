@@ -34,8 +34,12 @@ const DepositModal: React.FC = observer(() => {
     }
   };
 
+  const handleClose = (): void => {
+    setAmount('');
+  };
+
   return (
-    <Modal name="deposit" destroyOnClose>
+    <Modal name="deposit" destroyOnClose handleCancel={handleClose}>
       <div className="m-deposit">
         <div className="text-lg text-white m-deposit__title">Deposit</div>
         <div className="text text-gray m-deposit__subtitle">{modals.depositData.tokenName}</div>

@@ -2,10 +2,12 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 
 import PreviewImg from '../../assets/img/preview.png';
-import { Button, NFTCard } from '../../components';
+import { Button, NFTCard, ApproveModal } from '../../components';
 import { useConnectorContext } from '../../contexts/Connector';
 import config from '../../config';
+import web3Config from '../../services/web3/config';
 import { useMst } from '../../store/store';
+import MetamaskService from '../../services/web3';
 
 import './Home.scss';
 
@@ -23,6 +25,19 @@ const Home: React.FC = observer(() => {
     } else {
       modals.changeVisible('connect', true);
     }
+  };
+
+  const handleApproveLock = async () => {
+    const { address, id } = modals.nft;
+
+    await connect.metamaskService.approveToken(address, 'NFT', [web3Config.ETH.ADDRESS, id]);
+  };
+
+  const handleApproveDeposit = async () => {
+    await connect.metamaskService.approveToken(modals.depositData.tokenAddress, 'BEP', [
+      web3Config.BSC.ADDRESS,
+      MetamaskService.calcTransactionAmount(1, modals.depositData.decimals),
+    ]);
   };
 
   React.useEffect(() => {
@@ -85,6 +100,12 @@ const Home: React.FC = observer(() => {
             ))}
         </div>
       </div>
+      <ApproveModal name="approveLock" nextModal="end" handleApprove={handleApproveLock} />
+      <ApproveModal
+        name="approveDeposit"
+        nextModal="deposit"
+        handleApprove={handleApproveDeposit}
+      />
     </main>
   );
 });

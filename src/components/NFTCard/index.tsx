@@ -56,7 +56,7 @@ const NFTCard: React.FC<INFTCarc> = observer(
           modals.handleError('bsc');
         } else {
           modals.setDepositData(tokenAddress, decimals, name);
-          modals.changeVisible('deposit', true);
+          modals.changeVisible('approveDeposit', true);
         }
       } else {
         modals.changeVisible('connect', true);

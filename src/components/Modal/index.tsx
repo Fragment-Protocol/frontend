@@ -11,7 +11,15 @@ interface IModal {
   handleCancel?: () => void;
   className?: string;
   width?: string | number;
-  name: 'connect' | 'disconnect' | 'deposit' | 'address' | 'token' | 'end';
+  name:
+    | 'connect'
+    | 'disconnect'
+    | 'deposit'
+    | 'address'
+    | 'token'
+    | 'end'
+    | 'approveDeposit'
+    | 'approveLock';
   destroyOnClose?: boolean;
 }
 

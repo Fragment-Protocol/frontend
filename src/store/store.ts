@@ -25,6 +25,8 @@ export const Store = RootModel.create({
     deposit: false,
     address: false,
     token: false,
+    approveDeposit: false,
+    approveLock: false,
     end: false,
     errMsg: '',
     nft: {

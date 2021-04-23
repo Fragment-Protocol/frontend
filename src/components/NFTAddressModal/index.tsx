@@ -16,7 +16,7 @@ const NFTAddressModal: React.FC = observer(() => {
   const handleContinue = () => {
     modals.setNftData(address, id);
     modals.changeVisible('address', false);
-    modals.changeVisible('end', true);
+    modals.changeVisible('approveLock', true);
   };
   return (
     <Modal name="address">

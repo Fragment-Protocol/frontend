@@ -22,10 +22,20 @@ export const Modals = types
     errMsg: types.string,
     nft: Nft,
     depositData: Deposit,
+    approveDeposit: types.boolean,
+    approveLock: types.boolean,
   })
   .actions((self) => ({
     changeVisible(
-      name: 'connect' | 'disconnect' | 'deposit' | 'address' | 'token' | 'end',
+      name:
+        | 'connect'
+        | 'disconnect'
+        | 'deposit'
+        | 'address'
+        | 'token'
+        | 'end'
+        | 'approveDeposit'
+        | 'approveLock',
       value: boolean,
     ) {
       self[name] = value;

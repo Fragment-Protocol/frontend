@@ -7,7 +7,6 @@ import { useConnectorContext } from '../../contexts/Connector';
 import { useMst } from '../../store/store';
 import MetamaskService from '../../services/web3';
 import Modal from '../Modal';
-import web3Config from '../../services/web3/config';
 
 import './DepositModal.scss';
 
@@ -21,10 +20,6 @@ const DepositModal: React.FC = observer(() => {
     setLoading(true);
     console.log(modals.depositData.tokenAddress, modals.depositData.decimals);
     try {
-      await connectContext.metamaskService.approveToken(modals.depositData.tokenAddress, 'BEP', [
-        web3Config.BSC.ADDRESS,
-        MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals),
-      ]);
       await connectContext.metamaskService.createTransaction('BSC', 'returnTokens', [
         modals.depositData.tokenAddress,
         MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals),

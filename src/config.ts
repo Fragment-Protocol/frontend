@@ -1,5 +1,5 @@
 export default {
-  isProduction: false,
-  networkEth: 'rinkeby',
-  networkBsc: 'bnct',
+  isProduction: true,
+  networkEth: 'mainnet',
+  networkBsc: 'bnc',
 };

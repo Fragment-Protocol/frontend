@@ -197,7 +197,7 @@ export default {
     ],
   },
   ETH: {
-    ADDRESS: '0xAf27d807f3b90905ade7754D69b27e8e639724A2',
+    ADDRESS: '0xcDdd562C0cF8c262AD8A5c1A476cdBBE114FcC28',
     ABI: [
       {
         inputs: [{ internalType: 'address', name: '_back', type: 'address' }],
@@ -293,7 +293,7 @@ export default {
     ],
   },
   BSC: {
-    ADDRESS: '0x6190DE03BE15e9B2E3dbc652DC87BdA8E60A84Fc',
+    ADDRESS: '0xE751ffdC2a684EEbcaB9Dc95fEe05c083F963Bf1',
     ABI: [
       {
         anonymous: false,

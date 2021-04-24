@@ -26,9 +26,9 @@ const MetamaskModal: React.FC = observer(() => {
         <div className="text-lg text-white m-error__title">
           <p>Current Network mismatch.</p>
           {modals.errMsg === 'eth' ? (
-            <span>Please Select: Rinkeby network</span>
+            <span>Please Select: Mainnet network</span>
           ) : (
-            <span>Please Select: Bsc testnet</span>
+            <span>Please Select: Bsc Mainnet</span>
           )}
         </div>
         <Button colorScheme="white" className="m-error__btn" onClick={handleOk} size="lg">

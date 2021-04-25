@@ -103,7 +103,7 @@ const NFTCard: React.FC<INFTCarc> = observer(
       <div className="nft-card">
         {me ? <img src={StarImg} alt="me" className="nft-card__star" /> : ''}
         <a href={url} target="_blank" rel="noreferrer" className="nft-card__img">
-          {img ? <img src={`http://${img}`} alt="" /> : <img src={TokenImg} alt="" />}
+          {img ? <img src={img} alt="" /> : <img src={TokenImg} alt="" />}
         </a>
         <div className="nft-card__content">
           <div className="nft-card__info">

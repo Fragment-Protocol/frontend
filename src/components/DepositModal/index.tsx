@@ -18,12 +18,17 @@ const DepositModal: React.FC = observer(() => {
 
   const handleDeposit = async () => {
     setLoading(true);
-    console.log(modals.depositData.tokenAddress, modals.depositData.decimals);
     try {
-      await connectContext.metamaskService.createTransaction('BSC', 'returnTokens', [
-        modals.depositData.tokenAddress,
-        MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals),
-      ]);
+      console.log(MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals));
+      await connectContext.metamaskService.createTransaction(
+        'BSC',
+        'returnTokens',
+        [
+          modals.depositData.tokenAddress,
+          MetamaskService.calcTransactionAmount(+amount, modals.depositData.decimals),
+        ],
+        false,
+      );
 
       setLoading(false);
       modals.changeVisible('deposit', false);

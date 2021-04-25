@@ -1,5 +1,11 @@
+// export default {
+//   isProduction: true,
+//   networkEth: 'mainnet',
+//   networkBsc: 'bnc',
+// };
+
 export default {
-  isProduction: true,
-  networkEth: 'mainnet',
-  networkBsc: 'bnc',
+  isProduction: false,
+  networkEth: 'rinkeby',
+  networkBsc: 'bnct',
 };

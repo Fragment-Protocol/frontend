@@ -10,6 +10,7 @@ import { useConnectorContext } from '../../contexts/Connector';
 import { useMst } from '../../store/store';
 import config from '../../config';
 import axios from '../../core/axios';
+import web3Config from '../../services/web3/config';
 import Button from '../Button';
 
 import './NFTCard.scss';
@@ -48,15 +49,26 @@ const NFTCard: React.FC<INFTCarc> = observer(
   }) => {
     const { modals, user } = useMst();
     const connectContext = useConnectorContext();
+    const [isLoading, setLoading] = React.useState(false);
 
-    const handleDeposit = (): void => {
+    const handleDeposit = async () => {
       console.log(tokenAddress, decimals);
       if (user.address) {
         if (user.network !== config.networkBsc) {
           modals.handleError('bsc');
         } else {
-          modals.setDepositData(tokenAddress, decimals, name);
-          modals.changeVisible('approveDeposit', true);
+          const isApproved = await connectContext.metamaskService.checkTokenAllowance(
+            tokenAddress,
+            'BEP',
+            decimals,
+            web3Config.BSC.ADDRESS,
+          );
+          modals.setDepositData(tokenAddress, decimals, name, +totalSypply);
+          if (isApproved) {
+            modals.changeVisible('deposit', true);
+          } else {
+            modals.changeVisible('approveDeposit', true);
+          }
         }
       } else {
         modals.changeVisible('connect', true);
@@ -64,17 +76,23 @@ const NFTCard: React.FC<INFTCarc> = observer(
     };
 
     const handleWithDraw = async () => {
-      console.log(nftTokenAddress, id, owner);
       if (user.address) {
         if (user.network !== config.networkEth) {
           modals.handleError('eth');
         } else {
-          await connectContext.metamaskService.createTransaction('ETH', 'withdrawNft', [
-            nftTokenAddress,
-            id,
-            owner,
-          ]);
-          await axios.post(`/locked_nft/${tokenId}/unlock/`);
+          try {
+            setLoading(true);
+            await connectContext.metamaskService.createTransaction('ETH', 'withdrawNft', [
+              nftTokenAddress,
+              id,
+              owner,
+            ]);
+            await axios.post(`/locked_nft/${tokenId}/unlock/`);
+
+            setLoading(false);
+          } catch (err) {
+            setLoading(false);
+          }
         }
       } else {
         modals.changeVisible('connect', true);
@@ -138,6 +156,7 @@ const NFTCard: React.FC<INFTCarc> = observer(
           {isWithdraw && (
             <Button
               size="sm"
+              loading={isLoading}
               colorScheme="outline"
               className="nft-card__btn"
               onClick={handleWithDraw}

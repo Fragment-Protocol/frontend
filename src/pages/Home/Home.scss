@@ -5,6 +5,13 @@
     position: relative;
     overflow: hidden;
     padding-bottom: 60px;
+    &-wrapper {
+      display: flex;
+      align-items: center;
+    }
+    &-btn {
+      margin-right: 30px;
+    }
     &-row {
       position: relative;
       padding-top: 95px;

@@ -28,15 +28,21 @@ const Home: React.FC = observer(() => {
   };
 
   const handleApproveLock = async () => {
-    const { address, id } = modals.nft;
+    const { address } = modals.nft;
 
-    await connect.metamaskService.approveToken(address, 'NFT', [web3Config.ETH.ADDRESS, id]);
+    await connect.metamaskService.createTransaction(
+      'NFT',
+      'setApprovalForAll',
+      [web3Config.ETH.ADDRESS, true],
+      false,
+      address,
+    );
   };
 
   const handleApproveDeposit = async () => {
     await connect.metamaskService.approveToken(modals.depositData.tokenAddress, 'BEP', [
       web3Config.BSC.ADDRESS,
-      MetamaskService.calcTransactionAmount(1, modals.depositData.decimals),
+      MetamaskService.calcTransactionAmount(modals.depositData.amount, modals.depositData.decimals),
     ]);
   };
 
@@ -64,9 +70,18 @@ const Home: React.FC = observer(() => {
             <p className="home__preview-subtitle text-white">
               Lock up your NFT, issue BEP-20 tokens and bring them to DeFi world.
             </p>
-            <Button colorScheme="white" onClick={handleOpenAddressModal}>
-              + ADD ASSET
-            </Button>
+            <div className="home__preview-wrapper">
+              <Button
+                colorScheme="white"
+                onClick={handleOpenAddressModal}
+                className="home__preview-btn"
+              >
+                + ADD ASSET
+              </Button>
+              <Button colorScheme="white" link="https://youtu.be/pgJpJECPD5c">
+                INFO
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -88,7 +103,10 @@ const Home: React.FC = observer(() => {
                 id={item.nftId}
                 tokenId={item.id}
                 sold={item.bep20 ? item.bep20.current_balance : 0}
-                isWithdraw={item.ready_to_withdraw}
+                isWithdraw={
+                  item.ready_to_withdraw ||
+                  (item.bep20 ? item.bep20.total === item.bep20?.current_balance : false)
+                }
                 me={item.owner.toLowerCase() === user.address.toLowerCase()}
                 tokenAddress={item.bep20 ? item.bep20.tokenAddress : ''}
                 nftTokenAddress={item.nftAddress}

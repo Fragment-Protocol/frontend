@@ -164,6 +164,36 @@ export default class MetamaskService {
     return +new BigNumber(totalSupply).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
   }
 
+  public async checkTokenAllowance(
+    tokenAddress: string,
+    contractName: 'BEP',
+    tokenDecimals: number,
+    contractAddress: string,
+    walletAddress?: string,
+  ) {
+    const walletAdr = walletAddress || this.walletAddress;
+
+    try {
+      const contract = this.getContract(tokenAddress, config[contractName].ABI);
+      let result = await contract.methods.allowance(walletAdr, contractAddress).call();
+
+      const totalSupply = await this.totalSupply(
+        tokenAddress,
+        config[contractName].ABI,
+        tokenDecimals,
+      );
+
+      result = result ? result.toString(10) : result;
+      result = result === '0' ? null : result;
+      if (result && new BigNumber(result).minus(totalSupply).isPositive()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
   public async approveToken(
     tokenAddress: string,
     contract: 'ETH' | 'BSC' | 'NFT',
@@ -182,10 +212,11 @@ export default class MetamaskService {
   }
 
   public async createTransaction(
-    contract: 'ETH' | 'BSC',
+    contract: 'ETH' | 'BSC' | 'NFT',
     method: string,
     data: Array<any>,
     isDoubleGas: boolean,
+    toAddress?: string,
     walletAddress?: string,
   ) {
     const transactionMethod = MetamaskService.getMethodInterface(config[contract].ABI, method);
@@ -194,7 +225,7 @@ export default class MetamaskService {
 
     const tx: any = {
       from: walletAddress || this.walletAddress,
-      to: config[contract].ADDRESS,
+      to: toAddress || config[contract].ADDRESS,
       data: approveSignature,
     };
 

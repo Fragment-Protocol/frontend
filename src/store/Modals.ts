@@ -9,6 +9,7 @@ const Deposit = types.model({
   tokenAddress: types.string,
   decimals: types.number,
   tokenName: types.string,
+  amount: types.number,
 });
 /* eslint-disable no-param-reassign */
 export const Modals = types
@@ -47,11 +48,12 @@ export const Modals = types
       self.nft.address = address;
       self.nft.id = id;
     },
-    setDepositData(tokenAddress: string, decimals: number, tokenName: string) {
+    setDepositData(tokenAddress: string, decimals: number, tokenName: string, amount: number) {
       self.depositData = {
         tokenAddress,
         decimals,
         tokenName,
+        amount,
       };
     },
   }));

@@ -30,8 +30,10 @@ const Button: React.FC<ButtonProps> = React.memo(
     disabled = false,
     loading = false,
     shadow,
+    link,
+    linkClassName,
   }) => {
-    return (
+    const Btn = (
       <BtnAntd
         onClick={onClick}
         disabled={disabled || loading}
@@ -51,6 +53,19 @@ const Button: React.FC<ButtonProps> = React.memo(
         {loading ? 'Loading' : children}
       </BtnAntd>
     );
+    if (link) {
+      return (
+        <a
+          className={classNames('btn-link', linkClassName)}
+          href={link}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {Btn}
+        </a>
+      );
+    }
+    return Btn;
   },
 );
 

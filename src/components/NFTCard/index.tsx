@@ -29,6 +29,7 @@ interface INFTCarc {
   decimals: number;
   nftTokenAddress: string;
   owner: string;
+  isAll: boolean;
 }
 
 const NFTCard: React.FC<INFTCarc> = observer(
@@ -46,6 +47,7 @@ const NFTCard: React.FC<INFTCarc> = observer(
     nftTokenAddress,
     owner,
     tokenId,
+    isAll,
   }) => {
     const { modals, user } = useMst();
     const connectContext = useConnectorContext();
@@ -148,7 +150,7 @@ const NFTCard: React.FC<INFTCarc> = observer(
                 <img src={InfoImg} alt="info" />
                 <span>Deposit liquid tokens to unlock NFT</span>
               </div>
-              <Button size="sm" className="nft-card__btn" onClick={handleDeposit}>
+              <Button disabled={isAll} size="sm" className="nft-card__btn" onClick={handleDeposit}>
                 Deposit
               </Button>
             </>

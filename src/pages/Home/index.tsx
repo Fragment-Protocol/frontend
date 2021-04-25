@@ -103,10 +103,8 @@ const Home: React.FC = observer(() => {
                 id={item.nftId}
                 tokenId={item.id}
                 sold={item.bep20 ? item.bep20.current_balance : 0}
-                isWithdraw={
-                  item.ready_to_withdraw ||
-                  (item.bep20 ? item.bep20.total === item.bep20?.current_balance : false)
-                }
+                isWithdraw={item.ready_to_withdraw}
+                isAll={item.bep20 ? +item.bep20.total === +item.bep20.current_balance : false}
                 me={item.owner.toLowerCase() === user.address.toLowerCase()}
                 tokenAddress={item.bep20 ? item.bep20.tokenAddress : ''}
                 nftTokenAddress={item.nftAddress}

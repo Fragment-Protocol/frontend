@@ -194,6 +194,28 @@ export default class MetamaskService {
     }
   }
 
+  public async checkNfTTokenAllowance(
+    tokenAddress: string,
+    contractName: 'NFT',
+    contractAddress: string,
+  ) {
+    try {
+      const contract = this.getContract(tokenAddress, config[contractName].ABI);
+      let result = await contract.methods
+        .isApprovedForAll(this.walletAddress, contractAddress)
+        .call();
+
+      result = result ? result.toString(10) : result;
+      result = result === '0' ? null : result;
+      if (result) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
   public async approveToken(
     tokenAddress: string,
     contract: 'ETH' | 'BSC' | 'NFT',

@@ -5,18 +5,30 @@ import Button from '../Button';
 import Input from '../Input';
 import Modal from '../Modal';
 import { useMst } from '../../store/store';
+import { useConnectorContext } from '../../contexts/Connector';
+import web3Config from '../../services/web3/config';
 
 import './NFTAddressModal.scss';
 
 const NFTAddressModal: React.FC = observer(() => {
   const { modals } = useMst();
   const [address, setAddress] = React.useState('');
+  const connectContext = useConnectorContext();
   const [id, setId] = React.useState('');
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     modals.setNftData(address, id);
+    const isApproved = await connectContext.metamaskService.checkNfTTokenAllowance(
+      address,
+      'NFT',
+      web3Config.ETH.ADDRESS,
+    );
     modals.changeVisible('address', false);
-    modals.changeVisible('approveLock', true);
+    if (isApproved) {
+      modals.changeVisible('end', true);
+    } else {
+      modals.changeVisible('approveLock', true);
+    }
   };
 
   const handleClose = () => {

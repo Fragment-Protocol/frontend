@@ -1,6 +1,10 @@
 @import '../../styles/vars';
+@import '../../styles/mixins/media.scss';
 .home {
   padding-bottom: 50px;
+  @include b('mobile') {
+    padding: 75px 0 50px;
+  }
   &__preview {
     position: relative;
     overflow: hidden;
@@ -11,10 +15,17 @@
     }
     &-btn {
       margin-right: 30px;
+      @include b('mobile') {
+        width: 100%;
+        margin-right: 20px;
+      }
     }
     &-row {
       position: relative;
       padding-top: 95px;
+      @include b('mobile') {
+        padding-top: 250px;
+      }
       &::before {
         content: '';
         position: absolute;
@@ -26,6 +37,9 @@
         right: calc(100% + 187px);
         top: 0;
         box-shadow: -8px 8px 0 white;
+        @include b('mobile') {
+          display: none;
+        }
       }
     }
     &-content {
@@ -33,14 +47,46 @@
     }
     &-subtitle {
       margin: 10px 0 50px;
+      @include b('mobile') {
+        margin: 25px 0 20px;
+      }
     }
     &-img {
       position: absolute;
       top: 0;
       left: 550px;
       height: 425px;
+      @include b('mobile') {
+        left: 15px;
+        height: 228px;
+      }
+      &::before {
+        content: '';
+        display: block;
+        height: 100%;
+        width: 100%;
+        left: -8px;
+        bottom: -8px;
+        background: white;
+        clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 6% 100%, -41% 0px);
+        position: absolute;
+      }
+
+      &-box {
+        clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 6% 100%, -41% 0px);
+        background: $orange;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+      }
       img {
-        max-height: 100%;
+        max-height: 80%;
+        margin-left: 50px;
+        @include b('mobile') {
+          max-height: 100%;
+          margin-left: 20px;
+        }
       }
     }
   }
@@ -49,6 +95,10 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: 4px 4px;
+      @include b('mobile') {
+        grid-template-columns: 1fr;
+        grid-gap: 16px 16px;
+      }
     }
   }
 }

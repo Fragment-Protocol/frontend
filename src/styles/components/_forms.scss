@@ -5,6 +5,9 @@
     align-items: flex-end;
     &-input {
       width: 480px;
+      @include b('mobile') {
+        width: 80vw;
+      }
       &-short {
         width: 180px;
       }

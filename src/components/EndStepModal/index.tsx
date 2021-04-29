@@ -31,6 +31,7 @@ const EndStepModal: React.FC = observer(() => {
       );
       setLoading(false);
       modals.changeVisible('end', false);
+      localStorage.fragment_create = true;
       modals.changeVisible('token', true);
     } catch (err) {
       setLoading(false);

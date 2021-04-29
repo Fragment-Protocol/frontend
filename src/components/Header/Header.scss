@@ -1,3 +1,5 @@
+@import '../../styles/mixins/media.scss';
+
 .header {
   position: absolute;
   top: 20px;
@@ -9,6 +11,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  &__logo {
+    @include b('mobile') {
+      width: 140px;
+    }
   }
   &__btn {
     img {

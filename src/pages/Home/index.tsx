@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import PreviewImg from '../../assets/img/preview.png';
+import PreviewImg from '../../assets/img/preview-2.png';
 import { Button, NFTCard, ApproveModal } from '../../components';
 import { useConnectorContext } from '../../contexts/Connector';
 import config from '../../config';
@@ -17,6 +17,10 @@ const Home: React.FC = observer(() => {
 
   const handleOpenAddressModal = (): void => {
     if (user.address) {
+      if (localStorage.fragment_create) {
+        modals.changeVisible('token', true);
+        return;
+      }
       if (user.network === config.networkEth) {
         modals.changeVisible('address', true);
       } else {
@@ -61,7 +65,9 @@ const Home: React.FC = observer(() => {
       <div className="home__preview">
         <div className="row home__preview-row">
           <div className="home__preview-img">
-            <img src={PreviewImg} alt="" />
+            <div className="home__preview-img-box">
+              <img src={PreviewImg} alt="" />
+            </div>
           </div>
           <div className="home__preview-content">
             <h1 className="h1 home__preview-title text-white">

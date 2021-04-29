@@ -1,10 +1,18 @@
 .h1 {
   font-size: 45px;
   line-height: 60px;
+  @include b('mobile') {
+    font-size: 30px;
+    line-height: 30px;
+  }
 }
 .text {
   font-size: 20px;
   line-height: 25px;
+  @include b('mobile') {
+    font-size: 16px;
+    line-height: 25px;
+  }
   &-smm {
     font-size: 12px;
     line-height: 16px;
@@ -20,10 +28,18 @@
   &-lg {
     font-size: 25px;
     line-height: 32px;
+    @include b('mobile') {
+      font-size: 18px;
+      line-height: 23px;
+    }
   }
   &-xl {
     font-size: 30px;
     line-height: 39px;
+    @include b('mobile') {
+      font-size: 25px;
+      line-height: 32px;
+    }
   }
   &-white {
     color: white;

@@ -150,7 +150,13 @@ const NFTCard: React.FC<INFTCarc> = observer(
                 <img src={InfoImg} alt="info" />
                 <span>Deposit liquid tokens to unlock NFT</span>
               </div>
-              <Button disabled={isAll} size="sm" className="nft-card__btn" onClick={handleDeposit}>
+              <Button
+                disabled={isAll}
+                size="sm"
+                colorScheme="orange"
+                className="nft-card__btn"
+                onClick={handleDeposit}
+              >
                 Deposit
               </Button>
             </>

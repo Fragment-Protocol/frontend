@@ -1,6 +1,7 @@
 @import './reset';
 @import './fonts';
 @import './vars';
+@import './mixins/media.scss';
 @import './typography';
 @import '~antd/dist/antd.css';
 @import './components/index.scss';
@@ -51,4 +52,8 @@ main {
 .row {
   max-width: 1000px;
   margin: 0 auto;
+  @include b('mobile') {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }

@@ -1,8 +1,12 @@
 @import './../../styles/vars';
+@import '../../styles/mixins/media.scss';
 .m-end {
   padding: 100px 60px 40px;
   text-align: center;
   position: relative;
+  @include b('mobile') {
+    padding: 80px 15px 30px;
+  }
   &__text {
     max-width: 480px;
   }
@@ -21,5 +25,10 @@
     box-shadow: -4px 4px 0 $orange;
     padding: 8px 8px 4px 8px;
     cursor: pointer;
+    img {
+      @include b('mobile') {
+        width: 50px;
+      }
+    }
   }
 }

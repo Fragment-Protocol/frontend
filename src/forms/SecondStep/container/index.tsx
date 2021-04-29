@@ -51,6 +51,7 @@ export default observer(() => {
           );
 
           setFieldValue('isLoading', false);
+          delete localStorage.fragment_create;
           modals.changeVisible('token', false);
           await cards.getItems();
         }

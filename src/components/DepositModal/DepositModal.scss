@@ -1,14 +1,21 @@
+@import '../../styles/mixins/media.scss';
 .m-deposit {
   padding: 60px 60px 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @include b('mobile') {
+    padding: 60px 15px 30px;
+  }
   &__subtitle {
     margin: 12px 0 40px;
   }
   &__input {
     width: 480px !important;
+    @include b('mobile') {
+      width: 100% !important;
+    }
   }
   &__btn {
     margin-top: 40px;

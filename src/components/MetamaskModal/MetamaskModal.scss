@@ -1,6 +1,10 @@
+@import '../../styles/mixins/media.scss';
 .m-metamask {
   padding: 60px 210px 65px;
   text-align: center;
+  @include b('mobile') {
+    padding: 60px 35px 30px;
+  }
   &__subtitle {
     margin: 12px 0 38px;
   }

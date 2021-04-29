@@ -1,7 +1,11 @@
+@import '../../styles/mixins/media.scss';
 .m-nft-addr {
   &__subtitle {
     max-width: 480px;
     margin-bottom: 0;
+    @include b('mobile') {
+      max-width: 300px;
+    }
   }
   .input__wrapper {
     margin-top: 40px;

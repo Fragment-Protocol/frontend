@@ -14,16 +14,6 @@
     background: $orange;
     color: white;
   }
-  &-md {
-    padding: 20px;
-  }
-  &-sm {
-    padding: 10px;
-    width: 145px;
-  }
-  &-lg {
-    padding: 20px 60px;
-  }
   &-white {
     box-shadow: -8px 8px 0px white;
     &:active {
@@ -42,18 +32,6 @@
       background: #000;
     }
   }
-  &-outline {
-    background: transparent;
-    border: 1px solid $orange;
-    &:hover {
-      background: $orange;
-      border-color: $orange !important;
-    }
-    &:focus,
-    &:active {
-      border-color: $orange !important;
-    }
-  }
   &:disabled {
     background: #8d8d8d;
     box-shadow: -8px 8px 0px #363636;
@@ -63,6 +41,36 @@
     &:focus {
       background: #8d8d8d;
       box-shadow: -8px 8px 0px #363636;
+    }
+  }
+  &-md {
+    padding: 20px;
+  }
+  &-sm {
+    padding: 10px;
+    width: 145px;
+    @include b('mobile') {
+      width: auto;
+      box-shadow: -4px 4px 0px white;
+    }
+  }
+  &-lg {
+    padding: 20px 60px;
+  }
+  &-orange {
+    box-shadow: none;
+  }
+  &-outline {
+    background: transparent;
+    border: 1px solid $orange;
+    box-shadow: none !important;
+    &:hover {
+      background: $orange;
+      border-color: $orange !important;
+    }
+    &:focus,
+    &:active {
+      border-color: $orange !important;
     }
   }
 }

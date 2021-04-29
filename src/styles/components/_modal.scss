@@ -28,6 +28,9 @@
     bottom: -12px;
     left: -12px;
     clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 9% 100%, -65% 0px);
+    @include b('mobile') {
+      clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 9% 100%, -104% 0px);
+    }
   }
   &-content {
     overflow: hidden;
@@ -35,6 +38,9 @@
     background: #000;
 
     clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 9% 100%, -65% 0px);
+    @include b('mobile') {
+      clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 9% 100%, -104% 0px);
+    }
   }
 
   &-body {

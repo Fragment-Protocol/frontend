@@ -23,17 +23,27 @@ const Header: React.FC = observer(() => {
     <header className="header">
       <div className="row">
         <div className="header__content">
-          <img src={LogoImg} alt="fragment" />
+          <img src={LogoImg} alt="fragment" className="header__logo" />
           {!user.address ? (
-            <Button colorScheme="black" onClick={handleConnect} className="header__btn">
-              <img src={MetamaskImg} alt="metamask" />
+            <Button
+              colorScheme={window.innerWidth > 768 ? 'black' : 'white'}
+              onClick={handleConnect}
+              size={window.innerWidth > 768 ? 'md' : 'sm'}
+              className="header__btn"
+            >
+              {window.innerWidth > 768 ? <img src={MetamaskImg} alt="metamask" /> : ''}
               <span className="text-md">Connect MetaMask</span>
             </Button>
           ) : (
             ''
           )}
           {user.address ? (
-            <Button colorScheme="black" onClick={handleDisconnect} className="header__btn">
+            <Button
+              colorScheme={window.innerWidth > 768 ? 'black' : 'white'}
+              size={window.innerWidth > 768 ? 'md' : 'sm'}
+              onClick={handleDisconnect}
+              className="header__btn"
+            >
               <span className="text-md text-ellipsis">{user.address}</span>
             </Button>
           ) : (

@@ -1,5 +1,9 @@
+@import '../../styles/mixins/media.scss';
 .m-step {
   padding: 60px 60px 40px;
+  @include b('mobile') {
+    padding: 60px 15px 30px;
+  }
   &__title {
     margin-bottom: 10px;
     text-align: center;

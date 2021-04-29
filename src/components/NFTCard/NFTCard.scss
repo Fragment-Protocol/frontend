@@ -1,4 +1,5 @@
 @import '../../styles/vars';
+@import '../../styles/mixins/media.scss';
 .nft-card {
   padding: 20px;
   background: $gray;
@@ -6,6 +7,11 @@
   max-width: 498px;
   clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 6% 100%, -229px 0px);
   display: flex;
+  @include b('mobile') {
+    padding: 0;
+    flex-direction: column;
+    clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 4% 100%, -137% 0px);
+  }
   &__star {
     position: absolute;
     left: 4px;
@@ -19,6 +25,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    @include b('mobile') {
+      max-width: unset;
+      max-height: 360px;
+    }
     img {
       max-width: 100%;
       max-height: 100%;
@@ -31,11 +41,17 @@
     align-items: center;
     margin-top: 35px;
     margin-bottom: 12px;
+    @include b('mobile') {
+      margin-top: 10px;
+    }
     img {
       margin-right: 5px;
     }
   }
   &__btn {
+    @include b('mobile') {
+      width: 100% !important;
+    }
     & + & {
       margin-top: 10px;
     }
@@ -55,6 +71,9 @@
   }
   &__content {
     width: 100%;
+    @include b('mobile') {
+      padding: 16px;
+    }
   }
   &__progress {
     margin-bottom: 13px;
@@ -67,6 +86,9 @@
     }
     &-text {
       max-width: 180px;
+      @include b('mobile') {
+        max-width: unset;
+      }
     }
   }
 }

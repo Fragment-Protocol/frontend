@@ -1,6 +1,10 @@
+@import '../../styles/mixins/media.scss';
 .m-disconnect {
   padding: 60px 150px 65px;
   text-align: center;
+  @include b('mobile') {
+    padding: 60px 35px;
+  }
   &__title {
     margin-bottom: 40px;
   }

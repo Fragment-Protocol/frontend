@@ -8,4 +8,9 @@
   &-inner {
     background: #494949;
   }
+  &-bg {
+    @include b('mobile') {
+      height: 4px !important;
+    }
+  }
 }

@@ -4,9 +4,15 @@ input,
   width: 100%;
   clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 7% 100%, -13% 0px);
   text-align: center;
+  @include b('mobile') {
+    padding: 18px 15px 17px;
+  }
   &__wrapper {
     position: relative;
     width: fit-content;
+    @include b('mobile') {
+      width: 100%;
+    }
   }
   &__border {
     background: $orange;
@@ -19,6 +25,9 @@ input,
     clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 7% 100%, -13% 0px);
     &.small {
       clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 17% 100%, -27% 0px);
+      @include b('mobile') {
+        clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 11% 100%, -27% 0px);
+      }
     }
   }
   &__placeholder {
@@ -31,6 +40,10 @@ input,
     transform: translate(-50%, -50%);
     width: max-content;
     transition: 0.3s;
+    @include b('mobile') {
+      font-size: 20px;
+      line-height: 26px;
+    }
   }
   &.active + &__placeholder,
   &:focus + &__placeholder {
@@ -45,6 +58,10 @@ input,
   }
   &.small {
     clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 17% 100%, -27% 0px);
+
+    @include b('mobile') {
+      clip-path: polygon(0 0, 100% 0, 100% 45px, 100% 100%, 11% 100%, -27% 0px);
+    }
   }
 }
 input::-webkit-outer-spin-button,
